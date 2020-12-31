@@ -15,10 +15,12 @@ namespace Milestone_Tracker
         { 
             InitializeComponent();
 
+            Device.SetFlags(new[] { "Brush_Experimental" });
+
             listView.ItemsSource = new List<MilestoneGroup>
             {
                 new MilestoneGroup("Elims"){
-                    new Milestone("kills",new int[] {10, 20, 50, 100, 150}, 30),
+                    new Milestone("kills",new int[] {10, 20, 50, 100, 150}, 15),
                     new Milestone("kills with smg and whatever you want or try a pickaxe if you feel like it",new int[] {50, 100, 250, 500, 1000},20)
                 },
                 new MilestoneGroup("Collect")
@@ -35,6 +37,9 @@ namespace Milestone_Tracker
 
             
         }
+
+
+        
     } 
 }
  

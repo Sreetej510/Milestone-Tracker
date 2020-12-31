@@ -12,7 +12,6 @@ namespace Milestone_Tracker.Models
         public int NumOfCheckpoints { get; set; }
         public List<int> CheckpointValues { get; set; }
         public int CurrentCheckpoint { get; set; }
-        public static double StageBGOffset { get; set; }
         public int StartValue { get; set; }
         public int EndValue { get; set; }
         public int CurrentValue { get; set; }
@@ -22,8 +21,8 @@ namespace Milestone_Tracker.Models
         public string ProgressRatio { get; set; }
         public string StageBGD { get; set; }
         public string StageBGL { get; set; }
-        private readonly static string[] ArrStageBGD = new string[] { "#787978","#439C05", "#38AFD8", "#B078E2", "#E28126" };
-        private readonly static string[] ArrStageBGL = new string[] { "#585958", "#43BC05", "#38BFF8", "#D078F2", "#F29126" };
+        private readonly static string[] ArrStageBGD = new string[] { "#585958","#23AC05", "#38BFF8", "#C078E2", "#F29126" };
+        private readonly static string[] ArrStageBGL = new string[] { "#686968", "#23BC05", "#38AFE8", "#D078F2", "#E28126" };
 
         // methods
         public Milestone(string name, int[] checkpointValues , int currentValue)
