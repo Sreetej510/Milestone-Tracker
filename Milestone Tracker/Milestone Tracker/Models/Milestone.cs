@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
-using System.Text;
 
 namespace Milestone_Tracker.Models
 {
@@ -19,13 +19,17 @@ namespace Milestone_Tracker.Models
         public int CurrentEndValue { get; set; }
         public float Progress { get; set; }
         public string ProgressRatio { get; set; }
+        public string ProgressColor { get; set; }
         public string StageBGD { get; set; }
+        
         public string StageBGL { get; set; }
-        private readonly static string[] ArrStageBGD = new string[] { "#585958","#23AC05", "#38BFF8", "#C078E2", "#F29126" };
+        private readonly static string[] ArrStageBGD = new string[] { "#585958", "#23AC05", "#38BFF8", "#C078E2", "#F29126" };
         private readonly static string[] ArrStageBGL = new string[] { "#686968", "#23BC05", "#38AFE8", "#D078F2", "#E28126" };
 
+
+
         // methods
-        public Milestone(string name, int[] checkpointValues , int currentValue)
+        public Milestone(string name, int[] checkpointValues, int currentValue)
         {
             Name = name;
             CurrentValue = currentValue;
@@ -37,22 +41,31 @@ namespace Milestone_Tracker.Models
             // current stage
             for (var i = 0; i < NumOfCheckpoints; i++)
             {
-                if (CheckpointValues[i] <= CurrentValue && CheckpointValues[i+1] > CurrentValue)
+                if (CheckpointValues[i] <= CurrentValue && CheckpointValues[i + 1] > CurrentValue)
                 {
-                    CurrentCheckpoint = i+1;
+                    CurrentCheckpoint = i + 1;
                     CurrentEndValue = CheckpointValues[i + 1];
                     CurrentStartValue = CheckpointValues[i];
                 }
             }
 
             //color fix
-            StageBGD = ArrStageBGD[CurrentCheckpoint-1];
-            StageBGL = ArrStageBGL[CurrentCheckpoint-1];
+            StageBGD = ArrStageBGD[CurrentCheckpoint - 1];
+            StageBGL = ArrStageBGL[CurrentCheckpoint - 1];
 
             //progress
             Progress = (float)CurrentValue / (float)CurrentEndValue;
 
             ProgressRatio = CurrentValue.ToString() + " / " + CurrentEndValue.ToString();
+
+            //progress color gradient calculator
+            Color color1 = Color.FromArgb(255, 255, 0);
+            Color color2 = Color.FromArgb(255, 92, 92);
+            double resultRed = color1.R + Progress * (color2.R - color1.R);
+            double resultGreen = color1.G + Progress * (color2.G - color1.G);
+            double resultBlue = color1.B + Progress * (color2.B - color1.B);
+
+            ProgressColor = "#" + string.Format("{0:X2}{1:X2}{2:X2}", (int)resultRed, (int)resultGreen, (int)resultBlue);
 
         }
         public void ChangeInfo(string name, byte numOfCheckpoints)

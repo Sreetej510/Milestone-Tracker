@@ -1,18 +1,13 @@
 ﻿using Milestone_Tracker.Models;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
- 
+
 namespace Milestone_Tracker
 {
     public partial class MainPage : ContentPage
     {
         public MainPage()
-        { 
+        {
             InitializeComponent();
 
             Device.SetFlags(new[] { "Brush_Experimental" });
@@ -34,12 +29,7 @@ namespace Milestone_Tracker
                     new Milestone("damage to enemy stuctures",new int[] {10, 20, 50, 100, 150},120)
                 }
             };
-
-            
         }
 
-
-        
-    } 
+    }
 }
- 

@@ -4,8 +4,8 @@
              xmlns:control="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:local="clr-namespace:Milestone_Tracker.Models"
-             x:Class="Milestone_Tracker.MainPage">
-
+             x:Class="Milestone_Tracker.MainPage"
+             BackgroundImageSource="fortnite_zero_notch.png">
 
     <StackLayout Spacing="0">
         <ListView x:Name="listView" IsGroupingEnabled="True" HasUnevenRows="True" SeparatorVisibility="None">
@@ -14,7 +14,7 @@
             <ListView.GroupHeaderTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Label HeightRequest="35" Text="{Binding Category}" TextColor="gray" FontAttributes="Bold" Padding="10, 10, 0, 5"/>
+                        <Label FontSize="25" Text="{Binding Category}" TextColor="White" FontAttributes="Bold" Padding="10, 10, 0, 5"/>
                     </ViewCell>
                 </DataTemplate>
             </ListView.GroupHeaderTemplate>
@@ -26,9 +26,9 @@
                         <Grid HorizontalOptions="FillAndExpand" Padding="5, 2" ColumnSpacing="0">
 
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.2*" />
+                                <ColumnDefinition Width="0.16*" />
                                 <ColumnDefinition Width="0.005*" />
-                                <ColumnDefinition Width="0.795*" />
+                                <ColumnDefinition Width="0.835*" />
                             </Grid.ColumnDefinitions>
 
                             <!-- Background -->
@@ -43,11 +43,12 @@
                             </yummy:PancakeView>
 
                             <!-- Current Stage -->
-                            <StackLayout Grid.Column="0" VerticalOptions="Center" Padding="0, 4, 0, 8">
+                            <StackLayout Grid.Column="0" VerticalOptions="Center">
                                 <Label FontSize="15" Text="Stage" TextColor="WhiteSmoke" HorizontalOptions="Center"/>
                                 <Label FontSize="40" FontAttributes="Bold" Text="{Binding CurrentCheckpoint}" TextColor="White" HorizontalOptions="Center"/>
                             </StackLayout>
 
+                            <!-- Vertical seperator -->
                             <Label Grid.Column="1" BackgroundColor="#000000" Opacity="0.4" />
 
 
@@ -55,16 +56,15 @@
                             <Grid Grid.Column="2"  HorizontalOptions="FillAndExpand" Padding="15 ,10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0.4*"/>
-                                    <RowDefinition Height="0.4*"/>
-                                    <RowDefinition Height="0.3*"/>
+                                    <RowDefinition Height="0.2*"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.7*"/>
-                                    <ColumnDefinition Width="0.3*"/>
+                                    <ColumnDefinition Width="0.8*"/>
+                                    <ColumnDefinition Width="0.2*"/>
                                 </Grid.ColumnDefinitions>
-                                <local:CustomLabel  HorizontalOptions="Start" Grid.RowSpan="2" Grid.Row="0" Grid.Column="0" FontSize="17" Text="{Binding Name}" TextColor="White"/>
-                                <control:ProgressRing RingThickness="12" VerticalOptions="End" Grid.RowSpan="3" Grid.Column="1" Progress="{Binding Progress}" RingProgressColor="Gold" Rotation="180" />
-                                <Label HorizontalOptions="End" Grid.Row="2" Grid.Column="0" FontSize="15" Text="{Binding ProgressRatio}" TextColor="WhiteSmoke"/>
+                                <local:CustomLabel  HorizontalOptions="Start" Grid.RowSpan="2" Grid.Row="0" Grid.Column="0" FontSize="17" Text="{Binding Name}" TextColor="White" />
+                                <control:ProgressRing RingThickness="10" Grid.RowSpan="2" Grid.Column="1" Progress="{Binding Progress}" RingProgressColor="{Binding ProgressColor}" RingBaseColor="WhiteSmoke" Rotation="180"/>
+                                <Label HorizontalOptions="End" Grid.Row="1" Grid.Column="0" FontSize="15" Text="{Binding ProgressRatio}"  TextColor="WhiteSmoke"/>
                             </Grid>
 
                         </Grid>
