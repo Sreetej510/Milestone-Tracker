@@ -18,13 +18,14 @@ namespace Milestone_Tracker.Models
         public int CurrentStartValue { get; set; }
         public int CurrentEndValue { get; set; }
         public float Progress { get; set; }
-        public string ProgressRatio { get; set; }
         public string ProgressColor { get; set; }
+        public string ProgressRatio { get; set; }
         public string StageBGD { get; set; }
         
         public string StageBGL { get; set; }
-        private readonly static string[] ArrStageBGD = new string[] { "#585958", "#23AC05", "#38BFF8", "#C078E2", "#F29126" };
-        private readonly static string[] ArrStageBGL = new string[] { "#686968", "#23BC05", "#38AFE8", "#D078F2", "#E28126" };
+        private readonly static string[] ArrStageBGL = new string[] { "#2f9813", "#48C4FF", "#b222ff", "#fc6001", "#ffe24d" };
+        private readonly static string[] ArrStageBGD = new string[] { "#24af16", "#3faccf", "#9b00ee", "#d35501", "#e6c000" };
+        private readonly static string[] ArrProgressColor = new string[] { "#29F619", "#28C4FF", "#9b00ee", "#fc5e01", "#ffff00" };
 
 
 
@@ -52,20 +53,13 @@ namespace Milestone_Tracker.Models
             //color fix
             StageBGD = ArrStageBGD[CurrentCheckpoint - 1];
             StageBGL = ArrStageBGL[CurrentCheckpoint - 1];
+            ProgressColor = ArrProgressColor[CurrentCheckpoint - 1];
 
             //progress
             Progress = (float)CurrentValue / (float)CurrentEndValue;
 
             ProgressRatio = CurrentValue.ToString() + " / " + CurrentEndValue.ToString();
 
-            //progress color gradient calculator
-            Color color1 = Color.FromArgb(255, 255, 0);
-            Color color2 = Color.FromArgb(255, 92, 92);
-            double resultRed = color1.R + Progress * (color2.R - color1.R);
-            double resultGreen = color1.G + Progress * (color2.G - color1.G);
-            double resultBlue = color1.B + Progress * (color2.B - color1.B);
-
-            ProgressColor = "#" + string.Format("{0:X2}{1:X2}{2:X2}", (int)resultRed, (int)resultGreen, (int)resultBlue);
 
         }
         public void ChangeInfo(string name, byte numOfCheckpoints)
