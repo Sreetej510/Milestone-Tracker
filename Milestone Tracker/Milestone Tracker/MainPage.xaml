@@ -6,9 +6,13 @@
              xmlns:local="clr-namespace:Milestone_Tracker.Models"
              x:Class="Milestone_Tracker.MainPage"
              BackgroundImageSource="fortnite.png">
+    
+    <NavigationPage.TitleView>
+        <Label Text="Fortnite" TextColor="White" HorizontalTextAlignment="Center" FontSize="25"/>
+    </NavigationPage.TitleView>
 
     <StackLayout Spacing="0">
-        <ListView x:Name="listView" IsGroupingEnabled="True" HasUnevenRows="True" SeparatorVisibility="None">
+        <ListView x:Name="listView" IsGroupingEnabled="True" HasUnevenRows="True" SeparatorVisibility="None" ItemTapped="ListView_ItemTapped" ItemSelected="ListView_ItemSelected">
 
             <!-- List Category -->
             <ListView.GroupHeaderTemplate>

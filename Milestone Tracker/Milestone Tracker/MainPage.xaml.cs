@@ -31,5 +31,15 @@ namespace Milestone_Tracker
             };
         }
 
+        private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            var item = e.Item as Milestone;
+            await Navigation.PushModalAsync(new CurrentValueModal(item),false);
+        }
+
+        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            listView.SelectedItem = null;
+        }
     }
 }
