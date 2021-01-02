@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -30,11 +29,10 @@ namespace Milestone_Tracker.Models
         private readonly static string[] D_ArrProgressColor = new string[] { "#29F619", "#28C4FF", "#9b00ee", "#fc5e01", "#ffff00" };
 
 
-        void OnPropertyChanged([CallerMemberName]string propertyName = "")
+        void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
 
 
         // fields

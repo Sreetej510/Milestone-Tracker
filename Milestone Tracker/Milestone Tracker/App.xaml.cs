@@ -10,6 +10,8 @@ namespace Milestone_Tracker
         {
             InitializeComponent();
 
+            Device.SetFlags(new[] { "SwipeView_Experimental" });
+
             MainPage = new NavigationPage(new MainPage());
         }
 

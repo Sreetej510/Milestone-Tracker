@@ -1,6 +1,8 @@
 ﻿using Milestone_Tracker.Models;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace Milestone_Tracker
 {
@@ -9,8 +11,6 @@ namespace Milestone_Tracker
         public MainPage()
         {
             InitializeComponent();
-
-            Device.SetFlags(new[] { "Brush_Experimental" });
 
             listView.ItemsSource = new List<MilestoneGroup>
             {
@@ -34,12 +34,31 @@ namespace Milestone_Tracker
         private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var item = e.Item as Milestone;
-            await Navigation.PushModalAsync(new CurrentValueModal(item),false);
+            await Navigation.PushModalAsync(new CurrentValueModal(item), false);
         }
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             listView.SelectedItem = null;
+        }
+
+        private async void SwipeItem_Edit(object sender, System.EventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            var item = menuItem.CommandParameter as Milestone;
+            await Navigation.PushModalAsync(new CurrentValueModal(item), false);
+        }
+
+        private void SwipeItem_Delete(object sender, System.EventArgs e)
+        {
+            var menuItem = sender as MenuItem;
+            var item = menuItem.CommandParameter as Milestone;
+            DisplayActionSheet(item.Name, "Cancel", "Delete");
+        }
+
+        private void SwipeView_Unfocused(object sender, FocusEventArgs e)
+        {
+
         }
     }
 }
