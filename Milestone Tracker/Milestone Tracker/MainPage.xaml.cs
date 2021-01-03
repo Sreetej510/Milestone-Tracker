@@ -1,6 +1,7 @@
 ﻿using Milestone_Tracker.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
@@ -12,23 +13,7 @@ namespace Milestone_Tracker
         {
             InitializeComponent();
 
-            listView.ItemsSource = new List<MilestoneGroup>
-            {
-                new MilestoneGroup("Elims"){
-                    new Milestone("kills",new int[] {10, 20, 50, 100, 150}, 15),
-                    new Milestone("kills with smg and whatever you want or try a pickaxe if you feel like it",new int[] {50, 100, 250, 500, 1000},20)
-                },
-                new MilestoneGroup("Collect")
-                {
-                    new Milestone("fish",new int[] {10, 20, 50, 100, 150},55),
-                    new Milestone("wood",new int[] {50, 100, 250, 500, 1000},100)
-                },
-                new MilestoneGroup("Damage")
-                {
-                    new Milestone("burn",new int[] {50, 100, 250, 500, 1000},228),
-                    new Milestone("damage to enemy stuctures",new int[] {10, 20, 50, 100, 150},120)
-                }
-            };
+            BindingContext = new PopulateList("listview");
         }
 
         private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -37,10 +22,6 @@ namespace Milestone_Tracker
             await Navigation.PushModalAsync(new CurrentValueModal(item), false);
         }
 
-        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            listView.SelectedItem = null;
-        }
 
         private async void SwipeItem_Edit(object sender, System.EventArgs e)
         {
@@ -56,9 +37,16 @@ namespace Milestone_Tracker
             DisplayActionSheet(item.Name, "Cancel", "Delete");
         }
 
-        private void SwipeView_Unfocused(object sender, FocusEventArgs e)
-        {
 
+        private async void ItemTapped(object sender, SelectionChangedEventArgs e)
+        {
+            var item = e.CurrentSelection.FirstOrDefault() as Milestone;
+            if (item == null)
+                return;
+
+            await Navigation.PushModalAsync(new CurrentValueModal(item), false);
+
+            ((CollectionView)sender).SelectedItem = null;
         }
     }
 }
