@@ -1,11 +1,12 @@
 ﻿using Milestone_Tracker.Models;
+using Milestone_Tracker.PageModels;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
-namespace Milestone_Tracker
+namespace Milestone_Tracker.Pages
 {
     public partial class MainPage : ContentPage
     {
@@ -13,13 +14,12 @@ namespace Milestone_Tracker
         {
             InitializeComponent();
 
-            BindingContext = new PopulateList("listview");
         }
 
-        private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+       /* private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var item = e.Item as Milestone;
-            await Navigation.PushModalAsync(new CurrentValueModal(item), false);
+            //await Navigation.PushModalAsync(new CurrentValuePage(), false);
         }
 
 
@@ -27,7 +27,7 @@ namespace Milestone_Tracker
         {
             var menuItem = sender as MenuItem;
             var item = menuItem.CommandParameter as Milestone;
-            await Navigation.PushModalAsync(new CurrentValueModal(item), false);
+            //await Navigation.PushModalAsync(new CurrentValuePage(item), false);
         }
 
         private void SwipeItem_Delete(object sender, System.EventArgs e)
@@ -47,6 +47,6 @@ namespace Milestone_Tracker
             await Navigation.PushModalAsync(new CurrentValueModal(item), false);
 
             ((CollectionView)sender).SelectedItem = null;
-        }
+        }*/
     }
 }

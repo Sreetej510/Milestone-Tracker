@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Autofac;
+using FreshMvvm;
+using Milestone_Tracker.PageModels;
+using System;
+using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,7 +16,12 @@ namespace Milestone_Tracker
 
             Device.SetFlags(new[] { "SwipeView_Experimental" });
 
-            MainPage = new NavigationPage(new MainPage());
+            var mainPage = FreshPageModelResolver.ResolvePageModel<MainPageModel>();
+
+            var navigationContainer = new FreshNavigationContainer(mainPage);
+
+            MainPage = navigationContainer;
+
         }
 
         protected override void OnStart()

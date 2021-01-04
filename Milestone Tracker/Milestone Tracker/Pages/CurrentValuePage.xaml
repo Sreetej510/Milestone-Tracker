@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Milestone_Tracker.CurrentValueModal"
+             x:Class="Milestone_Tracker.Pages.CurrentValuePage"
              xmlns:control="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:local="clr-namespace:Milestone_Tracker.Models"
@@ -12,7 +12,7 @@
         <!-- Title Name -->
         <StackLayout  BackgroundColor="Black" Opacity="0.4">
             <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer Tapped="TappedOutside" />
+                <TapGestureRecognizer />
             </StackLayout.GestureRecognizers>
         </StackLayout>
         
@@ -48,7 +48,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <!-- Name -->
-                <local:CustomLabel Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Name}" TextColor="White" FontSize="20"/>
+                <local:CustomLabel Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Item.Name}" TextColor="White" FontSize="20"/>
 
                 <!-- Stage and Progress -->
                 <Grid Grid.Row="1" Grid.Column="0" >
@@ -75,7 +75,7 @@
                         Maximum="{Binding CurrentEndValue, Mode=OneTime}" 
                         Minimum="{Binding CurrentStartValue, Mode=OneTime}" 
                         Value="{Binding CurrentValue, Mode=OneTime}"
-                        ValueChanged="Slider_ValueChanged"/>
+                        />
 
             </Grid>
         </Grid>

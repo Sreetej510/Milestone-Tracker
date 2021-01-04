@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace Milestone_Tracker.Models
 {
-    internal class PopulateList : BindableObject
+    public class PopulateList : BindableObject
     {
         private string ListName;
         private ObservableCollection<MilestoneGroup> _milestonesList;

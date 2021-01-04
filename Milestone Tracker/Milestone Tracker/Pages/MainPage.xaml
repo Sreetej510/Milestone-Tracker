@@ -4,7 +4,7 @@
              xmlns:control="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
              xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:local="clr-namespace:Milestone_Tracker.Models"
-             x:Class="Milestone_Tracker.MainPage"
+             x:Class="Milestone_Tracker.Pages.MainPage"
              BackgroundImageSource="fortnite.png">
 
     <ContentPage.Resources>
@@ -26,15 +26,15 @@
         
         
     </ContentPage.Resources>
-    
-    
+
+
     <NavigationPage.TitleView>
-        <Label Text="Fortnite" TextColor="White" HorizontalTextAlignment="Center" FontSize="25"/>
+        <Label Text="Fornite" TextColor="White" HorizontalTextAlignment="Center" FontSize="25"/>
     </NavigationPage.TitleView>
     
     <StackLayout Spacing="0">
 
-        <CollectionView ItemsSource="{Binding MilestonesList}" IsGrouped="True" SelectionMode="Single" SelectionChanged="ItemTapped">
+        <CollectionView ItemsSource="{Binding MileStoneCollection}" IsGrouped="True" SelectionMode="Single" SelectionChangedCommand="{Binding ItemTapped}" SelectedItem="{Binding TappedItem}">
 
                 <!-- List Category -->
             <CollectionView.GroupHeaderTemplate>
