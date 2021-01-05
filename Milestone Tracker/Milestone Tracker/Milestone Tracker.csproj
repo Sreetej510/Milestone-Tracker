@@ -20,7 +20,10 @@
 
 
   <ItemGroup>
-    <EmbeddedResource Update="CurrentValueModal.xaml">
+    <EmbeddedResource Update="Views\CurrentValueModal.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\DeleteItemModal.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

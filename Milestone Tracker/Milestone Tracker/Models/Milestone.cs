@@ -20,7 +20,6 @@ namespace Milestone_Tracker.Models
         public int D_CurrentEndValue { get; set; }
         public float D_Progress { get; set; }
         public string D_ProgressColor { get; set; }
-        public string D_ProgressRatio { get; set; }
         public string D_StageBGD { get; set; }
 
         public string D_StageBGL { get; set; }
@@ -135,15 +134,6 @@ namespace Milestone_Tracker.Models
                 OnPropertyChanged();
             }
         }
-        public string ProgressRatio
-        {
-            get => D_ProgressRatio;
-            set
-            {
-                D_ProgressRatio = value;
-                OnPropertyChanged();
-            }
-        }
         public string StageBGD
         {
             get => D_StageBGD;
@@ -202,9 +192,6 @@ namespace Milestone_Tracker.Models
             //progress
             Progress = (float)CurrentValue / (float)CurrentEndValue;
 
-            ProgressRatio = CurrentValue.ToString() + " / " + CurrentEndValue.ToString();
-
-
         }
         public void ChangeInfo(string name, byte numOfCheckpoints)
         {
@@ -219,13 +206,10 @@ namespace Milestone_Tracker.Models
             EndValue = endValue;
             CurrentValue = currentValue;
         }
-        public void ChangeCurrentValue(int currentValue)
+        public void ChangeCurrentValue()
         {
-            CurrentValue = currentValue;
 
             Progress = (float)CurrentValue / (float)CurrentEndValue;
-
-            ProgressRatio = CurrentValue.ToString() + " / " + CurrentEndValue.ToString();
 
         }
 
