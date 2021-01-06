@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Milestone_Tracker.Views.CurrentValueModal"
              xmlns:control="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
-             xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:local="clr-namespace:Milestone_Tracker.Models"
              BackgroundColor ="Transparent">
      
@@ -16,8 +15,7 @@
             </StackLayout.GestureRecognizers>
         </StackLayout>
 
-        <Grid x:Name="modalPancake" HeightRequest="200" HorizontalOptions="Fill" VerticalOptions="Center" Scale="0.7">
-            
+        <Grid x:Name="modalContainer" HeightRequest="220" HorizontalOptions="Fill" VerticalOptions="Center" TranslationY="-1000">
             
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
@@ -25,16 +23,7 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
 
-            <yummy:PancakeView BackgroundGradientEndPoint="0,0" BackgroundGradientStartPoint="1,1" CornerRadius="10" Grid.Column="1">
-                <yummy:PancakeView.BackgroundGradientStops>
-                    <yummy:GradientStop Color="{Binding Item.StageBGD}" Offset="0" />
-                    <yummy:GradientStop Color="{Binding Item.StageBGL}" Offset="0.2" />
-                    <yummy:GradientStop Color="{Binding Item.StageBGD}" Offset="0.4" />
-                    <yummy:GradientStop Color="{Binding Item.StageBGL}" Offset="0.6" />
-                    <yummy:GradientStop Color="{Binding Item.StageBGD}" Offset="0.8" />
-                    <yummy:GradientStop Color="{Binding Item.StageBGL}" Offset="1" />
-                </yummy:PancakeView.BackgroundGradientStops>
-            </yummy:PancakeView>
+            <BoxView CornerRadius="10" Grid.Column="1" BackgroundColor="{Binding Item.StageBGL}"/>
 
             <Grid Padding="25" Grid.Column="1" RowSpacing="0" ColumnSpacing="0">
                 
@@ -62,23 +51,26 @@
                     <Label Grid.Column="0" Text="{Binding Item.CurrentCheckpoint, StringFormat='Stage  :  {0:F0}'}" TextColor="White" FontSize="15" />
                     
                     <StackLayout Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End" Spacing="0">
-                        <Label Text="{Binding Item.CurrentValue}" TextColor="White" FontSize="18" FontAttributes="Bold"/>
+                        <Label Text="{Binding SliderValue}" TextColor="White" FontSize="18" FontAttributes="Bold"/>
                         <Label VerticalOptions="Center" Text="{Binding Item.CurrentEndValue, StringFormat=' / {0:F0}'}"  TextColor="White" FontSize="15"/>
                     </StackLayout>
                     
                 </Grid>
 
                 <!-- Progress ring -->
-                <control:ProgressRing RingThickness="10" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" RingProgressColor="WhiteSmoke" RingBaseColor="Transparent" Rotation="180" AnimationLength="100" Progress="{Binding Item.Progress}" />
+                <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" >
+                    <Button WidthRequest="50" Background="Transparent" TextColor="White" Text="{Binding ButtonText}" Command="{Binding UpdateTapped}"  />
+                    <control:ProgressRing RingThickness="10" RingProgressColor="WhiteSmoke" RingBaseColor="Transparent" Rotation="180" Progress="{Binding RingProgress}"/>
+                </Grid>
              
                 <!-- Slider -->
                 <Slider Grid.Row="2" Grid.Column="0" MinimumTrackColor="White" ThumbColor="White" 
-                        Maximum="{Binding Item.CurrentEndValue, Mode=OneTime}" 
-                        Minimum="{Binding Item.CurrentStartValue, Mode=OneTime}" 
-                        Value="{Binding Item.CurrentValue}"
-                        ValueChanged="Slider_ValueChanged"/>
-
+                        Maximum="{Binding SliderEndValue}" 
+                        Minimum="{Binding SliderStartValue}" 
+                        Value="{Binding SliderValue, Mode=TwoWay}" ValueChanged="Slider_ValueChanged"/>
+                
             </Grid>
+            
         </Grid>
         
     </Grid>

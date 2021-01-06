@@ -19,13 +19,7 @@ namespace Milestone_Tracker.Models
         public int D_CurrentStartValue { get; set; }
         public int D_CurrentEndValue { get; set; }
         public float D_Progress { get; set; }
-        public string D_ProgressColor { get; set; }
-        public string D_StageBGD { get; set; }
-
         public string D_StageBGL { get; set; }
-        private readonly static string[] D_ArrStageBGL = new string[] { "#2f9813", "#48C4FF", "#b222ff", "#fc6001", "#ffe24d" };
-        private readonly static string[] D_ArrStageBGD = new string[] { "#24af16", "#3faccf", "#9b00ee", "#d35501", "#e6c000" };
-        private readonly static string[] D_ArrProgressColor = new string[] { "#29F619", "#28C4FF", "#9b00ee", "#fc5e01", "#ffff00" };
 
 
         void OnPropertyChanged([CallerMemberName] string propertyName = "")
@@ -35,6 +29,9 @@ namespace Milestone_Tracker.Models
 
 
         // fields
+
+        public int GroupIndex { get; set; }
+
         public string Name
         {
             get => D_Name;
@@ -125,24 +122,6 @@ namespace Milestone_Tracker.Models
                 OnPropertyChanged();
             }
         }
-        public string ProgressColor
-        {
-            get => D_ProgressColor;
-            set
-            {
-                D_ProgressColor = value;
-                OnPropertyChanged();
-            }
-        }
-        public string StageBGD
-        {
-            get => D_StageBGD;
-            set
-            {
-                D_StageBGD = value;
-                OnPropertyChanged();
-            }
-        }
 
         public string StageBGL
         {
@@ -154,43 +133,30 @@ namespace Milestone_Tracker.Models
             }
         }
 
+        public bool NeedStageChange { get; set; }
+
 
         private readonly static string[] ArrStageBGL = new string[] { "#2f9813", "#48C4FF", "#b222ff", "#fc6001", "#ffe24d" };
-        private readonly static string[] ArrStageBGD = new string[] { "#24af16", "#3faccf", "#9b00ee", "#d35501", "#e6c000" };
-        private readonly static string[] ArrProgressColor = new string[] { "#29F619", "#28C4FF", "#9b00ee", "#fc5e01", "#ffff00" };
 
         public event PropertyChangedEventHandler PropertyChanged;
 
 
 
         // methods
-        public Milestone(string name, int[] checkpointValues, int currentValue)
+        public Milestone(int groupIndex,string name, int[] checkpointValues, int currentValue)
         {
+            GroupIndex = groupIndex;
             Name = name;
             CurrentValue = currentValue;
             NumOfCheckpoints = checkpointValues.Count();
             StartValue = 0;
             CheckpointValues = new List<int>() { StartValue };
             CheckpointValues.AddRange(checkpointValues);
+            NeedStageChange = false;
 
             // current stage
-            for (var i = 0; i < NumOfCheckpoints; i++)
-            {
-                if (CheckpointValues[i] <= CurrentValue && CheckpointValues[i + 1] > CurrentValue)
-                {
-                    CurrentCheckpoint = i + 1;
-                    CurrentEndValue = CheckpointValues[i + 1];
-                    CurrentStartValue = CheckpointValues[i];
-                }
-            }
+            ChangeStage();
 
-            //color fix
-            StageBGD = ArrStageBGD[CurrentCheckpoint - 1];
-            StageBGL = ArrStageBGL[CurrentCheckpoint - 1];
-            ProgressColor = ArrProgressColor[CurrentCheckpoint - 1];
-
-            //progress
-            Progress = (float)CurrentValue / (float)CurrentEndValue;
 
         }
         public void ChangeInfo(string name, byte numOfCheckpoints)
@@ -210,7 +176,32 @@ namespace Milestone_Tracker.Models
         {
 
             Progress = (float)CurrentValue / (float)CurrentEndValue;
+            if (Progress == 1)
+            {
+                NeedStageChange = true;
+                ChangeStage();                
+            }
 
+        }
+
+        public void ChangeStage()
+        {
+            for (var i = 0; i < NumOfCheckpoints; i++)
+            {
+                if (CheckpointValues[i] <= CurrentValue && CheckpointValues[i + 1] > CurrentValue)
+                {
+                    CurrentCheckpoint = i + 1;
+                    CurrentEndValue = CheckpointValues[i + 1];
+                    CurrentStartValue = CheckpointValues[i];
+                }
+            }
+
+
+            //color fix
+            StageBGL = ArrStageBGL[CurrentCheckpoint - 1];
+
+            //progress
+            Progress = (float)CurrentValue / (float)CurrentEndValue;            
         }
 
     }

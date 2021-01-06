@@ -27,18 +27,18 @@ namespace Milestone_Tracker.ViewModels
         private void eventDeleteItem(object obj)
         {
             var item = DeleteItem;
-            var v = (PopulateList)obj;
-            
+            var populateList = (PopulateList)obj;
 
-            foreach(MilestoneGroup group in v.MilestonesList)
+            foreach (var group in populateList.MilestonesList)
             {
-                foreach (var i in group)
+                if (group.GroupNumber == item.GroupIndex)
                 {
-                    if (i.Name == item.Name)
+                    group.Remove(item);
+                    if (group.Count == 0)
                     {
-                        group.Remove(item);
-                        break;
+                        populateList.MilestonesList.Remove(group);
                     }
+                    break;
                 }
             }
 

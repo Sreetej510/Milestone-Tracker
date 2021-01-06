@@ -1,6 +1,5 @@
 ﻿using Milestone_Tracker.Models;
 using Milestone_Tracker.ViewModels;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,27 +8,42 @@ namespace Milestone_Tracker.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CurrentValueModal : ContentPage
     {
-        public Milestone CurrentItem { get; private set; }
-        public CurrentValueModalViewModel getCurrentValueModalViewModel { get; set; }
-
-
-        public CurrentValueModal(Milestone item)
+        private CurrentValueModalViewModel _bindingContext;
+        public CurrentValueModal(Milestone item, int count)
         {
             InitializeComponent();
+            _bindingContext = new CurrentValueModalViewModel(item, modalGrid, modalContainer, count);
+            BindingContext = _bindingContext;
             TransitionModalIn();
-            getCurrentValueModalViewModel = new CurrentValueModalViewModel(item, modalGrid);
-            BindingContext = getCurrentValueModalViewModel;            
         }
 
         //Animation
         private async void TransitionModalIn()
         {
-            await modalPancake.ScaleTo(1, 300, Easing.SpringOut);
+            await modalContainer.TranslateTo(0, 0, 300);
         }
 
         private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            getCurrentValueModalViewModel.Item.ChangeCurrentValue();
+            _bindingContext.RingProgress = (float)_bindingContext.SliderValue / (float)_bindingContext.Item.CurrentEndValue;
+            if (_bindingContext.RingProgress == 1)
+            {
+                _bindingContext.ButtonText = "Next Stage";
+
+                if (_bindingContext.Item.CurrentCheckpoint == _bindingContext.Item.NumOfCheckpoints)
+                {
+                    _bindingContext.ButtonText = "Finished";
+                }
+            }
+            else
+            {
+                _bindingContext.ButtonText = "Update";
+            }
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
         }
 
     }

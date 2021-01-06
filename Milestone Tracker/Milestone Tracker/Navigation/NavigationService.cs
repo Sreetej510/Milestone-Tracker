@@ -39,5 +39,13 @@ namespace Milestone_Tracker.Navigation
             await currentPage.Navigation.PushAsync(page, animate);
         }
 
+        public void PopToListPage(int count)
+        {
+            var currentPage = GetCurrentPage();
+            for (int i = 0; i < count; i++)
+            {
+                currentPage.Navigation.PopModalAsync(false);
+            }
+        }
     }
 }

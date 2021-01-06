@@ -1,7 +1,5 @@
 ﻿using Milestone_Tracker.Views;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Milestone_Tracker
 {
@@ -11,7 +9,7 @@ namespace Milestone_Tracker
         {
             InitializeComponent();
 
-            Device.SetFlags(new[] { "SwipeView_Experimental" });
+            Device.SetFlags(new[] { "SwipeView_Experimental", "Shapes_Experimental" });
 
             MainPage = new NavigationPage(new MainPage());
         }

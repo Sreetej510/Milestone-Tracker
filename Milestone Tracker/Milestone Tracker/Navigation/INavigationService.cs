@@ -9,5 +9,7 @@ namespace Milestone_Tracker.Navigation
         void PopPage(bool animate);
         void PopModalPage(bool animate);
 
+        void PopToListPage(int count);
+
     }
 }

@@ -1,40 +1,125 @@
 ﻿using Milestone_Tracker.Models;
 using Milestone_Tracker.Navigation;
+using Milestone_Tracker.Views;
 using Xamarin.Forms;
-using Xamarin.Forms.PancakeView;
 
 namespace Milestone_Tracker.ViewModels
 {
-    public class CurrentValueModalViewModel
+    public class CurrentValueModalViewModel : BindableObject
     {
         public Milestone Item { get; set; }
+        private int _sliderValue;
+        private string _buttonText;
+        private int _sliderEndValue;
+        private int _sliderStartValue;
+
+        public int SliderStartValue
+        {
+            get { return _sliderStartValue; }
+            set
+            {
+                _sliderStartValue = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        public int SliderEndValue
+        {
+            get { return _sliderEndValue; }
+            set
+            {
+                _sliderEndValue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ButtonText
+        {
+            get { return _buttonText; }
+            set
+            {
+                _buttonText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int SliderValue
+        {
+            get
+            {
+                return _sliderValue;
+            }
+            set
+            {
+                _sliderValue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private float _ringProgress;
+
+        public float RingProgress
+        {
+            get
+            {
+                return _ringProgress;
+            }
+            set
+            {
+                _ringProgress = value;
+                OnPropertyChanged();
+            }
+        }
 
         public Command CloseCurrentValueModal { get; set; }
-        public Command SliderValueChange { get; set; }
-
-        public Grid ModalGrid { get; set; }
-        public PancakeView ModalPancake { get; set; }
-
+        public Command UpdateTapped { get; set; }
+        private Grid ModalGrid;
+        private Grid ModalContainer;
+        private int ModalPageCount;
 
         // Constructor
-        public CurrentValueModalViewModel(Milestone item, Grid modalGrid)
+        public CurrentValueModalViewModel(Milestone item, Grid modalGrid, Grid modalContainer, int count)
         {
             Item = item;
+            ModalPageCount = count;
             ModalGrid = modalGrid;
+            ModalContainer = modalContainer;
+
+            ButtonText = "Update";
+            SliderValue = (int)Item.CurrentValue;
+            SliderEndValue = (int)Item.CurrentEndValue;
+            SliderStartValue = (int)Item.CurrentStartValue;
+            RingProgress = (float)SliderValue / Item.CurrentEndValue;
+
             CloseCurrentValueModal = new Command(eventCloseCurrentValueModal);
-            SliderValueChange = new Command(eventSliderValueChange);
+            UpdateTapped = new Command(eventUpdateButtonAsync);
+
         }
 
         // events
         private async void eventCloseCurrentValueModal(object obj)
         {
             await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
-            new NavigationService().PopModalPage(false);
+            new NavigationService().PopToListPage(ModalPageCount);
+        }
+        private async void eventUpdateButtonAsync(object obj)
+        {
+
+            Item.CurrentValue = (int)SliderValue;
+            Item.Progress = (float)RingProgress;
+            if (Item.NumOfCheckpoints != Item.D_CurrentCheckpoint && RingProgress == 1)
+            {
+                ModalPageCount++;
+                await ModalContainer.TranslateTo(0, 1000, 300);
+                await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
+                Item.ChangeCurrentValue();
+                new NavigationService().PushModalPage(new CurrentValueModal(Item, ModalPageCount), false);
+            }
+
+            Item.ChangeCurrentValue();
+
         }
 
-        private void eventSliderValueChange(object obj)
-        {
-            Item.ChangeCurrentValue();
-        }
     }
 }

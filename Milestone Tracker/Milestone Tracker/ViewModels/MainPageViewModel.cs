@@ -17,7 +17,6 @@ namespace Milestone_Tracker.ViewModels
         public Command ItemTapped { get; set; }
         public Command ItemDelete { get; set; }
         public Command ItemEdit { get; set; }
-
         private Milestone _tappedItem;
         public Milestone TappedItem
         {
@@ -56,7 +55,7 @@ namespace Milestone_Tracker.ViewModels
         {
             if (TappedItem != null)
             {
-                new NavigationService().PushModalPage(new CurrentValueModal(TappedItem), false);
+                new NavigationService().PushModalPage(new CurrentValueModal(TappedItem, 1), false);
                 TappedItem = null;
             }
 
@@ -65,7 +64,7 @@ namespace Milestone_Tracker.ViewModels
         private void eventItemEdit(object obj)
         {
             var item = (Milestone)obj;
-            new NavigationService().PushModalPage(new CurrentValueModal(item), false);
+            new NavigationService().PushModalPage(new CurrentValueModal(item, 1), false);
         }
 
         private void eventItemDelete(object obj)
