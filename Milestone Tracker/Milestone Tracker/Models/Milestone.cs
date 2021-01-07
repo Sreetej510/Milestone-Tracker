@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Milestone_Tracker.Data;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -136,13 +138,13 @@ namespace Milestone_Tracker.Models
         public bool NeedStageChange { get; set; }
 
 
-        private readonly static string[] ArrStageBGL = new string[] { "#2f9813", "#48C4FF", "#b222ff", "#fc6001", "#ffe24d" };
+        private readonly static string[] ArrStageBGL = new string[] { "#787878", "#2f9813", "#48C4FF", "#b222ff", "#fc6001", "#ffe24d" };
 
         public event PropertyChangedEventHandler PropertyChanged;
 
 
 
-        // methods
+        // constructor
         public Milestone(int groupIndex,string name, int[] checkpointValues, int currentValue)
         {
             GroupIndex = groupIndex;
@@ -159,6 +161,9 @@ namespace Milestone_Tracker.Models
 
 
         }
+
+
+        // Methods
         public void ChangeInfo(string name, byte numOfCheckpoints)
         {
             Name = name;
@@ -182,6 +187,23 @@ namespace Milestone_Tracker.Models
                 ChangeStage();                
             }
 
+            var json = new ReadAndWriteJson("Fortnite");
+
+            var jObject = json.ReadJson();
+
+            var onGoing = (JArray)jObject["onGoing"];
+
+            var group = (JArray)onGoing[GroupIndex]["contents"];
+
+            foreach (var item in group)
+            {
+                if (item["name"].ToString() == Name)
+                {
+                    item["currentValue"] = CurrentValue;
+                }
+            }
+
+            json.WriteJson(jObject);
         }
 
         public void ChangeStage()

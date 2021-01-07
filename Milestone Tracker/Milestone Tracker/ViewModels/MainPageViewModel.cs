@@ -42,7 +42,7 @@ namespace Milestone_Tracker.ViewModels
         // constuctor
         public MainPageViewModel()
         {
-            populateList = new PopulateList("Forntite");
+            populateList = new PopulateList("Fortnite");
             ItemList = populateList.MilestonesList;
             ItemTapped = new Command(eventItemTapped);
             ItemDelete = new Command(eventItemDelete);
