@@ -3,7 +3,7 @@ using Milestone_Tracker.Navigation;
 using Milestone_Tracker.Views;
 using Xamarin.Forms;
 
-namespace Milestone_Tracker.ViewModels
+namespace Milestone_Tracker.ViewModels.Advanced_Lists
 {
     public class CurrentValueModalViewModel : BindableObject
     {

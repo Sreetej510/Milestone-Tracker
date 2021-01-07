@@ -2,7 +2,7 @@
 using Milestone_Tracker.Navigation;
 using Xamarin.Forms;
 
-namespace Milestone_Tracker.ViewModels
+namespace Milestone_Tracker.Views.Advanced_Lists
 {
     class DeleteItemModalViewModel
     {

@@ -1,5 +1,5 @@
 ﻿using Milestone_Tracker.Models;
-using Milestone_Tracker.ViewModels;
+using Milestone_Tracker.ViewModels.Advanced_Lists;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

@@ -1,12 +1,16 @@
-﻿using Milestone_Tracker.Models;
+﻿using Firebase.Auth;
+using Milestone_Tracker.Models;
 using Milestone_Tracker.Navigation;
 using Milestone_Tracker.Views;
+using Newtonsoft.Json;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace Milestone_Tracker.ViewModels
+namespace Milestone_Tracker.ViewModels.Advanced_Lists
 {
     class MainPageViewModel : INotifyPropertyChanged
     {
@@ -28,6 +32,7 @@ namespace Milestone_Tracker.ViewModels
             }
         }
 
+        public string WebAPIkey = "AIzaSyCzSretU-4oxkfKSCSjfSYBRC8pGWz7oOI";
 
         // On Property Change
         public event PropertyChangedEventHandler PropertyChanged;
@@ -42,6 +47,7 @@ namespace Milestone_Tracker.ViewModels
         // constuctor
         public MainPageViewModel()
         {
+            GetProfileInformationAndRefreshToken();
             populateList = new PopulateList("Fortnite");
             ItemList = populateList.MilestonesList;
             ItemTapped = new Command(eventItemTapped);
@@ -71,6 +77,28 @@ namespace Milestone_Tracker.ViewModels
         {
             var item = (Milestone)obj;
             new NavigationService().PushModalPage(new DeleteItemModal(item, populateList), false);
+        }
+
+
+
+
+        //Auto Login
+        async private void GetProfileInformationAndRefreshToken()
+        {
+            var authProvider = new FirebaseAuthProvider(new FirebaseConfig(WebAPIkey));
+            try
+            {
+                var savedfirebaseauth = JsonConvert.DeserializeObject<FirebaseAuth>(Preferences.Get("MyFirebaseRefreshToken", ""));
+                var RefreshedContent = await authProvider.RefreshAuthAsync(savedfirebaseauth);
+                Preferences.Set("MyFirebaseRefreshToken", JsonConvert.SerializeObject(RefreshedContent));
+            }
+            catch (Exception ex)
+            {
+                 await App.Current.MainPage.DisplayAlert("Alert", "Oh no !  Token expired", "OK");
+            }
+
+
+
         }
 
     }

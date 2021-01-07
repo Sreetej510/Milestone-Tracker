@@ -1,7 +1,7 @@
-﻿using Milestone_Tracker.ViewModels;
+﻿using Milestone_Tracker.ViewModels.Advanced_Lists;
 using Xamarin.Forms;
 
-namespace Milestone_Tracker.Views
+namespace Milestone_Tracker.Views.Advanced_Lists
 {
     public partial class MainPage : ContentPage
     {

@@ -1,4 +1,5 @@
 ﻿using Milestone_Tracker.Views;
+using Milestone_Tracker.Views.Advanced_Lists;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -19,15 +20,15 @@ namespace Milestone_Tracker.Data
 
         public JObject ReadJson()
         {
-            //var assembly = IntrospectionExtensions.GetTypeInfo(typeof(MainPage)).Assembly;
-            //Stream stream = assembly.GetManifestResourceStream("Milestone_Tracker.Data.Fortnite.json");
-            //string text = "";
-            //using (var reader = new StreamReader(stream))
-            //{
-            //    text = reader.ReadToEnd();
-            //}
-            //var jObject = JObject.Parse(text);
-            //File.WriteAllText(FilePath, jObject.ToString());
+            var assembly = IntrospectionExtensions.GetTypeInfo(typeof(MainPage)).Assembly;
+            Stream stream = assembly.GetManifestResourceStream("Milestone_Tracker.Data.Fortnite.json");
+            string text = "";
+            using (var reader = new StreamReader(stream))
+            {
+                text = reader.ReadToEnd();
+            }
+            var jObject = JObject.Parse(text);
+            File.WriteAllText(FilePath, jObject.ToString());
 
 
             var jsonString = File.ReadAllText(FilePath);

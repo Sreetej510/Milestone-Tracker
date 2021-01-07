@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:control="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
              xmlns:local="clr-namespace:Milestone_Tracker.Models"
-             x:Class="Milestone_Tracker.Views.MainPage"
+             x:Class="Milestone_Tracker.Views.Advanced_Lists.MainPage"
              BackgroundImageSource="fortnite.png">
    
     

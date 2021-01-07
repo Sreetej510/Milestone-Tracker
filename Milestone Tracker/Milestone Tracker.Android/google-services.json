@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "512283521643",
+    "project_id": "milestone-tracker-728c6",
+    "storage_bucket": "milestone-tracker-728c6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512283521643:android:cf4e079cd220ec80de772e",
+        "android_client_info": {
+          "package_name": "com.companyname.milestone_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512283521643-jiug7t8uc9apn7k4f18qpvc5vl6411oj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzSretU-4oxkfKSCSjfSYBRC8pGWz7oOI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512283521643-jiug7t8uc9apn7k4f18qpvc5vl6411oj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512283521643:android:736a97a47eb89039de772e",
+        "android_client_info": {
+          "package_name": "com.omega.milestone_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512283521643-jiug7t8uc9apn7k4f18qpvc5vl6411oj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzSretU-4oxkfKSCSjfSYBRC8pGWz7oOI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512283521643-jiug7t8uc9apn7k4f18qpvc5vl6411oj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

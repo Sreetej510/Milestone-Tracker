@@ -1,6 +1,5 @@
 ﻿using Milestone_Tracker.Models;
-using Milestone_Tracker.ViewModels;
-
+using Milestone_Tracker.Views.Advanced_Lists;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker.Views
