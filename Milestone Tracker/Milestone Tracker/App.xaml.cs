@@ -9,7 +9,7 @@ namespace Milestone_Tracker
         {
             InitializeComponent();
 
-            Device.SetFlags(new[] { "SwipeView_Experimental", "Shapes_Experimental" });
+            Device.SetFlags(new[] { "SwipeView_Experimental", "Brush_Experimental" });
 
             MainPage = new NavigationPage(new DashboardPage());
             

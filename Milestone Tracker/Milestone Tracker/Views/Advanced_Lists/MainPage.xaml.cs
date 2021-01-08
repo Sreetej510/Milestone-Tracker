@@ -5,11 +5,11 @@ namespace Milestone_Tracker.Views.Advanced_Lists
 {
     public partial class MainPage : ContentPage
     {
-        public MainPage()
+        public MainPage(string pageName)
         {
+            NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
-
-            BindingContext = new MainPageViewModel();
+            BindingContext = new MainPageViewModel(pageName);
         }
 
     }

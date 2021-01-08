@@ -2,45 +2,76 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Milestone_Tracker.Views.HomePage.DashboardPage"
-             BackgroundColor="Blue">
-
-    <NavigationPage.TitleView>
-        <Label Text="Home" TextColor="White" HorizontalTextAlignment="Center" FontSize="25"/>
-    </NavigationPage.TitleView>
-
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             NavigationPage.HasNavigationBar="False">
 
     
-    <StackLayout Padding="20">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Image Scale="2" Grid.RowSpan="2" Source="sparkling_paris.jpg"/>
 
-        <CollectionView ItemsSource="{Binding DashboardCollection}" SelectionMode="Single" SelectionChangedCommand="{Binding ItemTapped}" SelectedItem="{Binding TappedItem, Mode=TwoWay}" ItemSizingStrategy="MeasureAllItems">
+        <Grid Grid.Row="0">
+            <BoxView Opacity="0.4" Color="black"/>            
+                <Label Text="Home" FontSize="25" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center"/>
+                <ImageButton Source="add_circle_white.png" BackgroundColor="Transparent" HorizontalOptions="End" Padding="20,5" Command="{Binding AddList}"/>
+        </Grid>
 
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" Span="2"/>
-            </CollectionView.ItemsLayout>                        
-            
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
+        <Grid Grid.Row="1" Padding="20">
 
-                    <Grid Padding="20">
 
+
+
+            <CollectionView ItemsSource="{Binding DashboardCollection}" SelectionMode="Single" SelectionChangedCommand="{Binding ItemTapped}" SelectedItem="{Binding TappedItem, Mode=TwoWay}" ItemSizingStrategy="MeasureFirstItem">
+
+                <CollectionView.EmptyView>
+                    <Grid VerticalOptions="Center" Padding="20">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="100"/>
-                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1.8*" />
                         </Grid.RowDefinitions>
-                        
-                        <BoxView Grid.RowSpan="2" Color="Black" Opacity="0.5" CornerRadius="20"/>
-                        <BoxView Grid.Row="0" Color="White" CornerRadius="20,20,0,0"/>
-                        <Label Grid.Row="0" Text="{Binding FirstLetter}" FontSize="50" HorizontalOptions="Center" VerticalOptions="Center" />
-                        <Label Grid.Row="1" Text="{Binding PageName}" FontSize="16" TextColor="White" HorizontalOptions="Center"/>
-                            
+                        <BoxView Color="White" Opacity="0.5" CornerRadius="20"/>
+                        <Label Text="Press Add Button on the Top to start adding lists" FontSize="Large" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Padding="20"/>
                     </Grid>
-
-                </DataTemplate>
+                </CollectionView.EmptyView>
                 
-            </CollectionView.ItemTemplate>
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2"/>
+                </CollectionView.ItemsLayout>                        
             
-        </CollectionView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Grid Padding="20">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="100"/>
+                                <RowDefinition Height="40"/>
+                            </Grid.RowDefinitions>
+                        
+                            <BoxView Grid.RowSpan="2" Color="Black" Opacity="0.5" CornerRadius="20"/>
+                            <BoxView Grid.Row="0" Color="{Binding PageColor}" CornerRadius="20,20,0,0"/>
+                            <Label Grid.Row="0" Text="{Binding FirstLetter}" FontSize="50" HorizontalOptions="Center" VerticalOptions="Center" />
+                            <Label Grid.Row="1" Text="{Binding PageName}" FontSize="16" TextColor="White" HorizontalOptions="Center"/>
+                            
+                        </Grid>
+
+                    </DataTemplate>
+                
+                </CollectionView.ItemTemplate>
+            
+            </CollectionView>
+
+            
+                
+            
+
+        </Grid>
         
-    </StackLayout>
+        
+        
+    </Grid>
     
 </ContentPage>

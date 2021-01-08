@@ -26,15 +26,13 @@ namespace Milestone_Tracker.Models
         public PopulateList(string listname)
         {
             MilestonesList = new ObservableCollection<MilestoneGroup>();
-            JsonFIleActivities = new ReadAndWriteJson(listname,"List_Data");
+            JsonFIleActivities = new ReadAndWriteJson(listname,"List_Data", "list");
 
             var jObject  = JsonFIleActivities.ReadJson();
 
-            var onGoing = jObject["onGoing"];
+            var list = (JArray)jObject["onGoing"];
 
-            var list = (JArray)onGoing;
 
-            
             foreach (var group in list)
             {
                 string category = group["category"].ToString();

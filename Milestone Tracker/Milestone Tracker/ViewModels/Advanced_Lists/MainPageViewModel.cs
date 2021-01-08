@@ -43,10 +43,10 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         }
 
         // constuctor
-        public MainPageViewModel()
+        public MainPageViewModel(string listName)
         {
-            GetProfileInformationAndRefreshToken();
-            populateList = new PopulateList("Fortnite");
+            //GetProfileInformationAndRefreshToken();
+            populateList = new PopulateList(listName);
             ItemList = populateList.MilestonesList;
             ItemTapped = new Command(eventItemTapped);
             ItemDelete = new Command(eventItemDelete);
@@ -77,21 +77,21 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         }
 
         //Auto Login
-        async private void GetProfileInformationAndRefreshToken()
-        {
-            var authProvider = new FirebaseAuthProvider(new FirebaseConfig(WebAPIkey));
-            try
-            {
-                var savedfirebaseauth = JsonConvert.DeserializeObject<FirebaseAuth>(Preferences.Get("MyFirebaseRefreshToken", ""));
-                var RefreshedContent = await authProvider.RefreshAuthAsync(savedfirebaseauth);
-                Preferences.Set("MyFirebaseRefreshToken", JsonConvert.SerializeObject(RefreshedContent));
-            }
-            catch (Exception ex)
-            {
-                 await App.Current.MainPage.DisplayAlert("Alert", "Oh no !  Token expired", "OK");
-            }
+        //async private void GetProfileInformationAndRefreshToken()
+        //{
+        //    var authProvider = new FirebaseAuthProvider(new FirebaseConfig(WebAPIkey));
+        //    try
+        //    {
+        //        var savedfirebaseauth = JsonConvert.DeserializeObject<FirebaseAuth>(Preferences.Get("MyFirebaseRefreshToken", ""));
+        //        var RefreshedContent = await authProvider.RefreshAuthAsync(savedfirebaseauth);
+        //        Preferences.Set("MyFirebaseRefreshToken", JsonConvert.SerializeObject(RefreshedContent));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //         await App.Current.MainPage.DisplayAlert("Alert", "Oh no !  Token expired", "OK");
+        //    }
 
-        }
+        //}
 
     }
 }

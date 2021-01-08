@@ -1,6 +1,6 @@
 ﻿using Firebase.Auth;
 using Milestone_Tracker.Navigation;
-using Milestone_Tracker.Views.Advanced_Lists;
+using Milestone_Tracker.Views.HomePage;
 using Newtonsoft.Json;
 using System;
 using Xamarin.Essentials;
@@ -56,7 +56,7 @@ namespace Milestone_Tracker.ViewModels.Login
                 var content = await auth.GetFreshAuthAsync();
                 var serializedcontnet = JsonConvert.SerializeObject(content);
                 Preferences.Set("MyFirebaseRefreshToken", serializedcontnet);
-                new NavigationService().PushPage(new MainPage());
+                new NavigationService().PopPage();
             }
             catch (Exception ex)
             {
