@@ -187,7 +187,7 @@ namespace Milestone_Tracker.Models
                 ChangeStage();                
             }
 
-            var json = new ReadAndWriteJson("Fortnite");
+            var json = new ReadAndWriteJson("Fortnite","List_Data");
 
             var jObject = json.ReadJson();
 

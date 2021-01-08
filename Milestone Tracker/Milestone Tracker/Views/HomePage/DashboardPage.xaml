@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Milestone_Tracker.Views.HomePage.DashboardPage"
+             BackgroundColor="Blue">
+
+    <NavigationPage.TitleView>
+        <Label Text="Home" TextColor="White" HorizontalTextAlignment="Center" FontSize="25"/>
+    </NavigationPage.TitleView>
+
+
+    
+    <StackLayout Padding="20">
+
+        <CollectionView ItemsSource="{Binding DashboardCollection}" SelectionMode="Single" SelectionChangedCommand="{Binding ItemTapped}" SelectedItem="{Binding TappedItem, Mode=TwoWay}" ItemSizingStrategy="MeasureAllItems">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="2"/>
+            </CollectionView.ItemsLayout>                        
+            
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+
+                    <Grid Padding="20">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        
+                        <BoxView Grid.RowSpan="2" Color="Black" Opacity="0.5" CornerRadius="20"/>
+                        <BoxView Grid.Row="0" Color="White" CornerRadius="20,20,0,0"/>
+                        <Label Grid.Row="0" Text="{Binding FirstLetter}" FontSize="50" HorizontalOptions="Center" VerticalOptions="Center" />
+                        <Label Grid.Row="1" Text="{Binding PageName}" FontSize="16" TextColor="White" HorizontalOptions="Center"/>
+                            
+                    </Grid>
+
+                </DataTemplate>
+                
+            </CollectionView.ItemTemplate>
+            
+        </CollectionView>
+        
+    </StackLayout>
+    
+</ContentPage>

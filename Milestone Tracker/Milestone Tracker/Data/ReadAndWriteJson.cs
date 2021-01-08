@@ -1,21 +1,20 @@
-﻿using Milestone_Tracker.Views;
-using Milestone_Tracker.Views.Advanced_Lists;
+﻿using Milestone_Tracker.Views.Advanced_Lists;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
 
 namespace Milestone_Tracker.Data
 {
     class ReadAndWriteJson
     {
         public string FilePath { get; set; }
+        public string Folder{ get; set; }
         
-        public ReadAndWriteJson(string fileName)
+        public ReadAndWriteJson(string fileName, string directory)
         {
-            FilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), fileName + ".json");
+            Folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), directory);
+            FilePath = Path.Combine(Folder , fileName + ".json");
         }
 
         public JObject ReadJson()
@@ -28,6 +27,7 @@ namespace Milestone_Tracker.Data
                 text = reader.ReadToEnd();
             }
             var jObject = JObject.Parse(text);
+            Directory.CreateDirectory(Folder);
             File.WriteAllText(FilePath, jObject.ToString());
 
 

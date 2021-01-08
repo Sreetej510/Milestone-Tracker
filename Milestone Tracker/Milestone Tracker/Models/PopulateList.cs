@@ -1,11 +1,6 @@
 ﻿using Milestone_Tracker.Data;
-using Milestone_Tracker.Views;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Reflection;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker.Models
@@ -31,7 +26,7 @@ namespace Milestone_Tracker.Models
         public PopulateList(string listname)
         {
             MilestonesList = new ObservableCollection<MilestoneGroup>();
-            JsonFIleActivities = new ReadAndWriteJson(listname);
+            JsonFIleActivities = new ReadAndWriteJson(listname,"List_Data");
 
             var jObject  = JsonFIleActivities.ReadJson();
 

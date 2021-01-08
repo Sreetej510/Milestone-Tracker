@@ -1,6 +1,4 @@
-﻿using Milestone_Tracker.Views.Advanced_Lists;
-using Milestone_Tracker.Views.Login;
-using Xamarin.Essentials;
+﻿using Milestone_Tracker.Views.HomePage;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker
@@ -13,14 +11,8 @@ namespace Milestone_Tracker
 
             Device.SetFlags(new[] { "SwipeView_Experimental", "Shapes_Experimental" });
 
-            if (!string.IsNullOrEmpty(Preferences.Get("MyFirebaseRefreshToken", "")))
-            {
-                MainPage = new NavigationPage(new MainPage());
-            }
-            else
-            {
-                MainPage = new NavigationPage(new LoginPage());
-            }
+            MainPage = new NavigationPage(new DashboardPage());
+            
             
         }
 

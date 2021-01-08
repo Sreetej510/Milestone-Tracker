@@ -42,8 +42,6 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
-
         // constuctor
         public MainPageViewModel()
         {
@@ -54,7 +52,6 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             ItemDelete = new Command(eventItemDelete);
             ItemEdit = new Command(eventItemEdit);
         }
-
 
         // events
         private void eventItemTapped()
@@ -79,9 +76,6 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             new NavigationService().PushModalPage(new DeleteItemModal(item, populateList), false);
         }
 
-
-
-
         //Auto Login
         async private void GetProfileInformationAndRefreshToken()
         {
@@ -96,8 +90,6 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             {
                  await App.Current.MainPage.DisplayAlert("Alert", "Oh no !  Token expired", "OK");
             }
-
-
 
         }
 
