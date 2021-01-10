@@ -13,43 +13,20 @@ namespace Milestone_Tracker.Data
         {
             Folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), directory);
             FilePath = Path.Combine(Folder, fileName + ".json");
-            Directory.CreateDirectory(Folder);
 
             if (!File.Exists(FilePath))
             {
-                string text = "";
                 
-                if (jsonType == "dashboard")
-                {
-                    text = "{\"listNames\":[], \"list\": []}";
-                }
-                else if (jsonType == "list")
-                {
-                    text = "{\"onGoing\": []}";
-                }
-
-                JObject jObject = JObject.Parse(text);
+                JObject jObject = JObject.Parse("{ \"allCategories\":[],\"onGoing\": []}");
                 
                 File.WriteAllText(FilePath, jObject.ToString());
                 
             }
-
         }
     
 
         public JObject ReadJson()
         {
-        //    var assembly = IntrospectionExtensions.GetTypeInfo(typeof(MainPage)).Assembly;
-        //    Stream stream = assembly.GetManifestResourceStream("Milestone_Tracker.Data.Dashboard.json");
-        //    string text = "";
-        //    using (var reader = new StreamReader(stream))
-        //    {
-        //        text = reader.ReadToEnd();
-        //    }
-        //    var jObject = JObject.Parse(text);
-
-        //    File.WriteAllText(FilePath, jObject.ToString());
-
             var jsonString = File.ReadAllText(FilePath);
             var jsonObject = JObject.Parse(jsonString);
             return jsonObject;

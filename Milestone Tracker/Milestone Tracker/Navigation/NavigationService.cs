@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker.Navigation
@@ -25,14 +26,14 @@ namespace Milestone_Tracker.Navigation
             await currentPage.Navigation.PopAsync(animate);
         }
 
-        public async void PushModalPage(Page page, bool animate = true)
+        public async Task PushModalPage(Page page, bool animate = true)
         {
             var currentPage = GetCurrentPage();
 
             await currentPage.Navigation.PushModalAsync(page, animate);
         }
 
-        public async void PushPage(Page page, bool animate = true)
+        public async Task PushPage(Page page, bool animate = true)
         {
             var currentPage = GetCurrentPage();
 

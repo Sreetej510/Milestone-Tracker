@@ -1,5 +1,7 @@
 ﻿using Milestone_Tracker.Data;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Xamarin.Forms;
 
@@ -8,7 +10,10 @@ namespace Milestone_Tracker.Models
     public class PopulateList : BindableObject
     {
         private ObservableCollection<MilestoneGroup> _milestonesList;
+
         private ReadAndWriteJson JsonFIleActivities;
+
+        public string ListName { get; }
 
         public ObservableCollection<MilestoneGroup> MilestonesList
         {
@@ -23,10 +28,11 @@ namespace Milestone_Tracker.Models
             }
         }
 
-        public PopulateList(string listname)
+        public PopulateList(string listName)
         {
+            ListName = listName;
             MilestonesList = new ObservableCollection<MilestoneGroup>();
-            JsonFIleActivities = new ReadAndWriteJson(listname,"List_Data", "list");
+            JsonFIleActivities = new ReadAndWriteJson(listName,"List_Data", "list");
 
             var jObject  = JsonFIleActivities.ReadJson();
 
@@ -37,9 +43,10 @@ namespace Milestone_Tracker.Models
             {
                 string category = group["category"].ToString();
                 
-                var groupIndex = list.IndexOf(group);
 
-                MilestonesList.Add(new MilestoneGroup(category, groupIndex));
+                MilestonesList.Add(new MilestoneGroup(category));
+
+                var groupIndex = MilestonesList.Count;
 
                 var itemList = group["contents"];
 
@@ -51,7 +58,7 @@ namespace Milestone_Tracker.Models
                     var checkpoints = jArray.ToObject<int[]>();
 
                     int currentValue = (int)item["currentValue"];
-                    MilestonesList[groupIndex].Add(new Milestone(groupIndex, name, checkpoints, currentValue));
+                    MilestonesList[groupIndex-1].Add(new Milestone(listName, category , name, checkpoints, currentValue));
                 }   
 
             };
@@ -59,5 +66,88 @@ namespace Milestone_Tracker.Models
         }
 
 
+        public void AddItemToPopulateList(string categoryInput, string name, string checkpointString, int currentValue)
+        {
+            var ItemJsonString = " {\"name\" : \"" + name + "\", \"checkpoints\" : [" + checkpointString + "], \"currentValue\" :" + currentValue + "}";
+            
+            var ItemJsonObject = JObject.Parse(ItemJsonString);
+
+
+            var array = checkpointString.Split(","[0]);
+            var checkpoints = Array.ConvertAll(array, s => int.Parse(s));
+
+            var jObject = JsonFIleActivities.ReadJson();
+
+            var list = (JArray)jObject["onGoing"];
+            var allCategories = (JArray)jObject["allCategories"];
+            List<string> strings = allCategories.ToObject<List<string>>();
+
+            var catInputCap = categoryInput.Trim().ToUpper();
+
+            if (strings.Contains(catInputCap))
+            {
+                var groupIndex = strings.IndexOf(catInputCap);
+                var group = list[groupIndex];
+                var groupArray = (JArray)group["contents"];
+                groupArray.Add(ItemJsonObject);
+                MilestonesList[groupIndex].Add(new Milestone(ListName,categoryInput, name, checkpoints, currentValue));
+                return;
+            }
+            else
+            {
+                allCategories.Add(catInputCap);
+                var groupJsonString = "{\"category\": \"" + categoryInput + "\" ,\"contents\": [" + ItemJsonString + "]}";
+                var groupJsonObject = JObject.Parse(groupJsonString);
+                list.Add(groupJsonObject);
+                MilestonesList.Add(new MilestoneGroup(categoryInput) {
+                        new Milestone(ListName,categoryInput, name, checkpoints, currentValue) 
+                        });                
+            }
+
+            JsonFIleActivities.WriteJson(jObject);
+
+        }
+        public void DeletItemFromPopulateList(Milestone deleteItem)
+        {
+            var jObject = JsonFIleActivities.ReadJson();
+            
+            var list = (JArray)jObject["onGoing"];
+            var allCategories = (JArray)jObject["allCategories"];
+            List<string> strings = allCategories.ToObject<List<string>>();
+
+            var deleteItemCatCap = deleteItem.Category.Trim().ToUpper();
+
+            var groupIndex = strings.IndexOf(deleteItemCatCap);
+
+            var group = list[groupIndex];
+
+            var groupArray = (JArray)group["contents"];
+
+            foreach (var item in groupArray)
+            {
+                if (item["name"].ToString() == deleteItem.Name)
+                {
+                    groupArray.Remove(item);
+                    allCategories.Remove(deleteItemCatCap);
+                    break;
+                }
+            }
+
+            MilestonesList[groupIndex].Remove(deleteItem);
+
+            if (groupArray.Count == 0)
+            {
+                list.Remove(group);
+                allCategories.Remove(deleteItemCatCap);
+                MilestonesList.RemoveAt(groupIndex);
+            }
+
+            JsonFIleActivities.WriteJson(jObject);
+
+        }
+
+    
+    
+    
     }
 }

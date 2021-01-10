@@ -20,7 +20,9 @@ namespace Milestone_Tracker.Views.HomePage
         protected override void OnAppearing()
         {
             dashPageViewModal.UpdateList();
+            dashPageViewModal.Enable = true;
             base.OnAppearing();
         }
+
     }
 }

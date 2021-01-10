@@ -6,9 +6,9 @@ namespace Milestone_Tracker.Views
 {
     public partial class DeleteItemModal : ContentPage
     {
-        public DeleteItemModal(Milestone item, PopulateList populateList)
+        public DeleteItemModal(string listName, Milestone item, PopulateList populateList)
         {
-            BindingContext = new DeleteItemModalViewModel(item, populateList);
+            BindingContext = new DeleteItemModalViewModel(listName, item, populateList);
             InitializeComponent();
             TransitionModalIn();
         }

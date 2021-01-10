@@ -6,13 +6,15 @@ namespace Milestone_Tracker.Views.Advanced_Lists
 {
     class DeleteItemModalViewModel
     {
+        public string ListName { get; }
         public Milestone DeleteItem { get; set; }
         public Command DeleteOk { get; set; }
         public PopulateList NewList { get; set; }
         public Command DeleteCancel { get; set; }
 
-        public DeleteItemModalViewModel(Milestone item, PopulateList populateList)
+        public DeleteItemModalViewModel(string listName, Milestone item, PopulateList populateList)
         {
+            ListName = listName;
             DeleteItem = item;
             NewList = populateList;
             DeleteOk = new Command(eventDeleteItem);
@@ -26,21 +28,9 @@ namespace Milestone_Tracker.Views.Advanced_Lists
 
         private void eventDeleteItem(object obj)
         {
-            var item = DeleteItem;
             var populateList = (PopulateList)obj;
 
-            foreach (var group in populateList.MilestonesList)
-            {
-                if (group.GroupNumber == item.GroupIndex)
-                {
-                    group.Remove(item);
-                    if (group.Count == 0)
-                    {
-                        populateList.MilestonesList.Remove(group);
-                    }
-                    break;
-                }
-            }
+            populateList.DeletItemFromPopulateList(DeleteItem);
 
             new NavigationService().PopModalPage(false);
 

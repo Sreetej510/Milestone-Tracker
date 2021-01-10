@@ -4,18 +4,27 @@
              xmlns:control="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
              xmlns:local="clr-namespace:Milestone_Tracker.Models"
              x:Class="Milestone_Tracker.Views.Advanced_Lists.MainPage"
-             BackgroundImageSource="fortnite.png">
+             NavigationPage.HasNavigationBar="False">
    
-    
-    <NavigationPage.TitleView>
-        <Label Text="Fortnite" TextColor="White" HorizontalTextAlignment="Center" FontSize="25"/>
-    </NavigationPage.TitleView>
-    
-    <StackLayout Spacing="0">
+        
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
 
-        <CollectionView x:Name="Collection" ItemsSource="{Binding ItemList}" IsGrouped="True" SelectionMode="Single" SelectionChangedCommand="{Binding ItemTapped}" SelectedItem="{Binding TappedItem, Mode=TwoWay}">
+        <Image Scale="1.5" Grid.RowSpan="2" Source="fortnite.png"/>
 
-                <!-- List Category -->
+        <Grid Grid.Row="0">
+            <BoxView Opacity="0.5" Color="black"/>
+            <Label Text="{Binding ListName}" FontSize="25" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center"/>
+            <ImageButton Source="add_circle_white.png"  HorizontalOptions="End" Padding="20,5" BackgroundColor="Transparent"  Command="{Binding ItemAdd}" IsEnabled="{Binding Enable, Mode=TwoWay}"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            
+            <CollectionView x:Name="Collection" ItemsSource="{Binding ItemList}" IsGrouped="True" SelectionMode="Single" SelectionChangedCommand="{Binding ItemTapped}" IsEnabled="{Binding Enable,Mode=TwoWay}" SelectedItem="{Binding TappedItem, Mode=TwoWay}">
+
+            <!-- List Category -->
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
                     <Label FontSize="25" Text="{Binding Category}" TextColor="White" FontAttributes="Bold" Padding="10, 10, 0, 5" />
@@ -28,24 +37,33 @@
 
                     <SwipeView BackgroundColor="Transparent">
 
-                        <SwipeView.LeftItems>
-                            <SwipeItems Mode="Execute">
-                                <SwipeItem Icon="edit_black.png"  Text="Edit" BackgroundColor="White" Command="{Binding BindingContext.ItemEdit, Source={x:Reference Collection}}" CommandParameter="{Binding .}"/>
-                            </SwipeItems>
-                        </SwipeView.LeftItems>
-
                         <SwipeView.RightItems>
-                            <SwipeItems Mode="Execute">
-                                <SwipeItem Icon="delete_white.png" Text="Delete" BackgroundColor="Red" Command="{Binding BindingContext.ItemDelete, Source={x:Reference Collection}}" CommandParameter="{Binding .}"/>
+                            <SwipeItems Mode="Reveal">
+                                <SwipeItemView Command="{Binding BindingContext.ItemDelete, Source={x:Reference Collection}}" CommandParameter="{Binding .}">
+                                    <Grid Padding="0,5,5,5">
+                                        <BoxView Color="Red" CornerRadius="0,10,0,10" />
+                                        <StackLayout WidthRequest="80" HorizontalOptions="Center" VerticalOptions="Center">
+                                            <Image HeightRequest="40" Source="delete_white.png" />
+                                            <Label Text="DELETE" TextColor="White" HorizontalTextAlignment="Center" FontSize="18"/>
+                                        </StackLayout>
+                                    </Grid>
+                                </SwipeItemView>
+                                <SwipeItemView Command="{Binding BindingContext.ItemEdit, Source={x:Reference Collection}}" CommandParameter="{Binding .}">
+                                    <Grid Padding="5,5,0,5">
+                                        <BoxView Color="White" CornerRadius="10,0,10,0" />
+                                        <StackLayout WidthRequest="80" HorizontalOptions="Center" VerticalOptions="Center">
+                                            <Image HeightRequest="40" Source="edit_black.png" />
+                                            <Label Text="EDIT" TextColor="Black" HorizontalTextAlignment="Center" FontSize="18"/>
+                                        </StackLayout>
+                                    </Grid>
+                                </SwipeItemView>
                             </SwipeItems>
                         </SwipeView.RightItems>
-
 
                         <StackLayout Orientation="Horizontal" Spacing="0" Padding="5, 2">
                                 <!-- Background -->
                                 <Grid WidthRequest="60" MinimumWidthRequest="60">
                                 <BoxView BackgroundColor="{Binding StageBGL}" CornerRadius="10, 0, 10, 0" />
-
 
                                 <!-- Current Stage -->
                                     <StackLayout Grid.Column="0" VerticalOptions="Center">
@@ -78,6 +96,10 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        
+        </Grid>
+
+
     
-    </StackLayout>
+    </Grid>
 </ContentPage>

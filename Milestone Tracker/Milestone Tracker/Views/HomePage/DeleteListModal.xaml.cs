@@ -5,20 +5,17 @@ using Xamarin.Forms.Xaml;
 namespace Milestone_Tracker.Views.HomePage
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AddListModal : ContentPage
+    public partial class DeleteListModal : ContentPage
     {
-        public AddListModal()
+        public DeleteListModal()
         {
             InitializeComponent();
             TransitionModalIn();
-            BindingContext = new AddListModalViewModel(modalGrid);            
+            BindingContext = new DeleteListModalViewModel(modalGrid);
         }
-
-
         private async void TransitionModalIn()
         {
-            await modalContainer.ScaleTo(1,300,Easing.SpringOut);
+            await modalContainer.ScaleTo(1, 300, Easing.SpringOut);
         }
-
     }
 }

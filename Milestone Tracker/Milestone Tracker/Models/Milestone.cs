@@ -30,9 +30,13 @@ namespace Milestone_Tracker.Models
         }
 
 
+
+
         // fields
 
-        public int GroupIndex { get; set; }
+        private string ListName;
+
+        public string Category { get; set; }
 
         public string Name
         {
@@ -145,9 +149,10 @@ namespace Milestone_Tracker.Models
 
 
         // constructor
-        public Milestone(int groupIndex,string name, int[] checkpointValues, int currentValue)
+        public Milestone(string listName ,string category,string name, int[] checkpointValues, int currentValue)
         {
-            GroupIndex = groupIndex;
+            ListName = listName;
+            Category = category;
             Name = name;
             CurrentValue = currentValue;
             NumOfCheckpoints = checkpointValues.Count();
@@ -177,6 +182,8 @@ namespace Milestone_Tracker.Models
             EndValue = endValue;
             CurrentValue = currentValue;
         }
+        
+        
         public void ChangeCurrentValue()
         {
 
@@ -184,16 +191,20 @@ namespace Milestone_Tracker.Models
             if (Progress == 1)
             {
                 NeedStageChange = true;
-                ChangeStage();                
+                ChangeStage();
             }
 
-            var json = new ReadAndWriteJson("Fortnite","List_Data", "advanced");
+            var json = new ReadAndWriteJson(ListName,"List_Data", "advanced");
 
             var jObject = json.ReadJson();
 
             var onGoing = (JArray)jObject["onGoing"];
+            var allCat = (JArray)jObject["allCategories"];
+            var allCatArray = allCat.ToObject<List<string>>();
 
-            var group = (JArray)onGoing[GroupIndex]["contents"];
+            var groupIndex = allCatArray.IndexOf(Category.Trim().ToUpper());
+
+            var group = (JArray)onGoing[groupIndex]["contents"];
 
             foreach (var item in group)
             {
@@ -210,7 +221,7 @@ namespace Milestone_Tracker.Models
         {
             for (var i = 0; i < NumOfCheckpoints; i++)
             {
-                if (CheckpointValues[i] <= CurrentValue && CheckpointValues[i + 1] > CurrentValue)
+                if (CheckpointValues[i] <= CurrentValue && CheckpointValues[i + 1] >= CurrentValue)
                 {
                     CurrentCheckpoint = i + 1;
                     CurrentEndValue = CheckpointValues[i + 1];

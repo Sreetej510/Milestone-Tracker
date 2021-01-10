@@ -5,11 +5,9 @@ namespace Milestone_Tracker.Models
     public class MilestoneGroup : ObservableCollection<Milestone>
     {
         public string Category { get; set; }
-        public int GroupNumber { get; set; }
-        public MilestoneGroup(string category, int groupNumber)
+        public MilestoneGroup(string category)
         {
             Category = category;
-            GroupNumber = groupNumber;
         }
     }
 }

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Milestone_Tracker.Views.Advanced_Lists.AddItemModal"
+             BackgroundColor="Transparent">
+
+
+    <Grid x:Name="modalGrid">
+
+        <StackLayout BackgroundColor="Black" Opacity="0.5">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding CloseAddItemModal}"/>
+            </StackLayout.GestureRecognizers>
+        </StackLayout>
+
+        <Grid x:Name="modalContainer"  HorizontalOptions="Fill" VerticalOptions="Center" Margin="20" Scale="0.6">
+
+
+            <BoxView CornerRadius="10" BackgroundColor="White"/>
+
+            <StackLayout Padding="20">
+                <Label Text="Add Task" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" />
+
+                <Entry Placeholder="Task Name" Text="{Binding Name, Mode=TwoWay}" Margin="10,20" MaxLength="15" FontSize="20" ClearButtonVisibility="WhileEditing"/>
+                <Entry Placeholder="Category" Text="{Binding Category, Mode=TwoWay}" Margin="10,20" MaxLength="15" FontSize="20" ClearButtonVisibility="WhileEditing"/>
+                <Entry Placeholder="Checkpoints sperated with a ','" Text="{Binding CheckpointString, Mode=TwoWay}" Margin="10,20" FontSize="20" ClearButtonVisibility="WhileEditing"/>
+
+                
+                <Label Padding="20,0" Text="{Binding ErrorMsg,Mode=TwoWay}" TextColor="Red" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" />
+
+                <Grid Margin="0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.1*" />
+                        <ColumnDefinition Width="0.45*" />
+                        <ColumnDefinition Width="0.2*" />
+                        <ColumnDefinition Width="0.45*" />
+                        <ColumnDefinition Width="0.1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="1" Text="Done" CornerRadius="10" Command="{Binding AddItemToList}" IsEnabled="{Binding DoneEnable}"/>
+                    <Button Grid.Column="3" Text="Cancel" CornerRadius="10" Command="{Binding CloseAddListModal}"/>
+                </Grid>
+
+            </StackLayout>
+
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

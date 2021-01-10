@@ -2,12 +2,10 @@
 using Milestone_Tracker.Models;
 using Milestone_Tracker.Navigation;
 using Milestone_Tracker.Views;
-using Newtonsoft.Json;
-using System;
+using Milestone_Tracker.Views.Advanced_Lists;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker.ViewModels.Advanced_Lists
@@ -16,10 +14,23 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
     {
 
         //Fields
+        public string ListName { get; }
         public PopulateList populateList { get; private set; }
         public ObservableCollection<MilestoneGroup> ItemList { get; set; }
         public Command ItemTapped { get; set; }
         public Command ItemDelete { get; set; }
+        public Command ItemAdd { get; set; }
+
+        private bool _enable;
+
+        public bool Enable
+        {
+            get { return _enable; }
+            set { _enable = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Command ItemEdit { get; set; }
         private Milestone _tappedItem;
         public Milestone TappedItem
@@ -46,34 +57,46 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         public MainPageViewModel(string listName)
         {
             //GetProfileInformationAndRefreshToken();
+            ListName = listName;
             populateList = new PopulateList(listName);
             ItemList = populateList.MilestonesList;
             ItemTapped = new Command(eventItemTapped);
             ItemDelete = new Command(eventItemDelete);
             ItemEdit = new Command(eventItemEdit);
+            ItemAdd = new Command(eventItemAdd);
+            Enable = true;
         }
+
 
         // events
-        private void eventItemTapped()
+        private async void eventItemAdd()
         {
-            if (TappedItem != null)
+            Enable = false;
+            await new NavigationService().PushModalPage(new AddItemModal(populateList), false);
+        }
+
+        private async void eventItemTapped()
+        {
+
+            var item = (Milestone)TappedItem;
+            TappedItem = null;
+            if (item != null && Enable)
             {
-                new NavigationService().PushModalPage(new CurrentValueModal(TappedItem, 1), false);
-                TappedItem = null;
+                Enable = false;
+                await new NavigationService().PushModalPage(new CurrentValueModal(item, 1), false);
             }
-
         }
 
-        private void eventItemEdit(object obj)
+        private async void eventItemEdit(object obj)
         {
             var item = (Milestone)obj;
-            new NavigationService().PushModalPage(new CurrentValueModal(item, 1), false);
+            await new NavigationService().PushModalPage(new CurrentValueModal(item, 1), false);
         }
 
-        private void eventItemDelete(object obj)
+        private async void eventItemDelete(object obj)
         {
             var item = (Milestone)obj;
-            new NavigationService().PushModalPage(new DeleteItemModal(item, populateList), false);
+            await new NavigationService().PushModalPage(new DeleteItemModal(ListName ,item, populateList), false);
         }
 
         //Auto Login

@@ -3,15 +3,17 @@ using Milestone_Tracker.Navigation;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker.ViewModels.HomePage
 {
-    public class AddListModalViewModel : BindableObject
+    class DeleteListModalViewModel : BindableObject
     {
         public Grid ModalGrid { get; }
-        public Command CloseAddListModal { get; }
-        public Command AddToList { get; }
+        public Command CloseDeleteListModal { get; }
+        public Command DeleteFromList { get; }
         public bool DoneEnable
         {
             get
@@ -27,79 +29,67 @@ namespace Milestone_Tracker.ViewModels.HomePage
             }
         }
         private string _errorMsg;
-
         public string ErrorMsg
         {
             get { return _errorMsg; }
-            set { _errorMsg = value;
-                OnPropertyChanged(); 
+            set
+            {
+                _errorMsg = value;
+                OnPropertyChanged();
             }
         }
-
         private string _taskName;
         public string TaskName
         {
             get { return _taskName; }
-            set { _taskName = value;
+            set
+            {
+                _taskName = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(DoneEnable));
             }
         }
 
-        public bool IsAdvanced { get; set; }
 
-        private static string[] colors = new string[] { "#F72585", "#7209B7", "#3A0CA3", "#4361EE", "#4CC9F0", "#fee440", "#9b5de5", "#f15bb5", "00bbf9", "#00f5d4" };
-
-        public AddListModalViewModel(Grid modalGrid)
+        // Constructor
+        public DeleteListModalViewModel(Grid modalGrid)
         {
             ModalGrid = modalGrid;
-            CloseAddListModal = new Command(eventCloseThisModal);
-            AddToList = new Command(eventAddToList);
+            CloseDeleteListModal = new Command(eventCloseThisModal);
+            DeleteFromList = new Command(eventDeleteFromList);
         }
 
 
-        private void eventAddToList(object obj)
+        // Events
+        private void eventDeleteFromList(object obj)
         {
-            // change to normal
-
-            var type = "advanced";
-            // the above variable needed to be changed
-
-            if (IsAdvanced)
-            {
-                type = "advanced";
-            }
-
-            var rnd = new Random();
-            var pageColor = colors[rnd.Next(9)]; 
-
-            var JsonFIleActivities = new ReadAndWriteJson("DashBoardList", "AppData", type);
+            var JsonFIleActivities = new ReadAndWriteJson("DashBoardList", "AppData", "advanced");
             JObject jObject = JsonFIleActivities.ReadJson();
+
+            var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "List_Data");
+            var filePath = Path.Combine(folder, TaskName + ".json");
+
+            File.Delete(filePath);
 
             var list = (JArray)jObject["list"];
             var listNames = (JArray)jObject["listNames"];
 
             List<string> strings = listNames.ToObject<List<string>>();
 
-            if (strings.Contains(TaskName.Trim().ToUpper()))
+            if (!strings.Contains(TaskName.Trim().ToUpper()))
             {
-                ErrorMsg = "Task with same name already exists";
+                ErrorMsg = "Task with this name doesnot exists";
             }
             else
             {
-                var jsonString = " {\"name\": \"" + TaskName + "\", \"Type\":\"" + type + "\", \"color\":\"" + pageColor + "\"}";
-
-                var jsonObject = JObject.Parse(jsonString);
-
-                list.Add(jsonObject);
-                listNames.Add(TaskName.Trim().ToUpper());
+                var v = strings.IndexOf(TaskName.Trim().ToUpper());
+                list.RemoveAt(v);
+                listNames.RemoveAt(v);
 
                 JsonFIleActivities.WriteJson(jObject);
 
                 new NavigationService().PopModalPage(false);
             }
-
-            
         }
 
         private async void eventCloseThisModal(object obj)
@@ -108,4 +98,5 @@ namespace Milestone_Tracker.ViewModels.HomePage
             new NavigationService().PopModalPage(false);
         }
     }
+
 }
