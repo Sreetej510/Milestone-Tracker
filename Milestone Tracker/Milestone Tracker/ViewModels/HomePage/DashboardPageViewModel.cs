@@ -28,7 +28,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
             }
         }
 
-        private bool _enable;
+        private bool _enable;  
         public bool Enable
         {
             get { return _enable; }
@@ -61,6 +61,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
             DeleteList = new Command(eventDeleteList);
             BackupList = new Command(eventBackupList);
             ItemTapped = new Command(eventOpenList);
+            Enable = true;
         }
 
         private void eventBackupList(object obj)
@@ -128,7 +129,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
         }
 
         // command events
-        private async void eventAddList()
+        private async void eventAddList(object obj)
         {
             Enable = false;
            await new NavigationService().PushModalPage(new AddListModal(),false);
@@ -145,7 +146,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
             }            
         }
 
-        private async void eventDeleteList()
+        private async void eventDeleteList(object obj)
         {
             Enable = false;
            await new NavigationService().PushModalPage(new DeleteListModal(), false);

@@ -102,7 +102,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
             
         }
 
-        private async void eventCloseThisModal(object obj)
+        public async void eventCloseThisModal()
         {
             await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
             new NavigationService().PopModalPage(false);

@@ -5,6 +5,7 @@ using Milestone_Tracker.Views;
 using Milestone_Tracker.Views.Advanced_Lists;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
@@ -17,6 +18,7 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         public string ListName { get; }
         public PopulateList populateList { get; private set; }
         public ObservableCollection<MilestoneGroup> ItemList { get; set; }
+        public ObservableCollection<MilestoneGroup> SearchItemList { get; set; }
         public Command ItemTapped { get; set; }
         public Command ItemDelete { get; set; }
         public Command ItemAdd { get; set; }
@@ -43,6 +45,8 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             }
         }
 
+        public string SearchBarText { get; private set; }
+
         public string WebAPIkey = "AIzaSyCzSretU-4oxkfKSCSjfSYBRC8pGWz7oOI";
 
         // On Property Change
@@ -67,9 +71,8 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             Enable = true;
         }
 
-
         // events
-        private async void eventItemAdd()
+        private async void eventItemAdd(object obj)
         {
             Enable = false;
             await new NavigationService().PushModalPage(new AddItemModal(populateList), false);
@@ -116,5 +119,6 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
 
         //}
 
+        
     }
 }

@@ -7,15 +7,24 @@ namespace Milestone_Tracker.Views.HomePage
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DeleteListModal : ContentPage
     {
+        private DeleteListModalViewModel _bindingContext;
+
         public DeleteListModal()
         {
             InitializeComponent();
             TransitionModalIn();
-            BindingContext = new DeleteListModalViewModel(modalGrid);
+            _bindingContext = new DeleteListModalViewModel(modalGrid);
+            BindingContext = _bindingContext;
         }
         private async void TransitionModalIn()
         {
             await modalContainer.ScaleTo(1, 300, Easing.SpringOut);
         }
+        protected override bool OnBackButtonPressed()
+        {
+            _bindingContext.eventCloseThisModal();
+            return true;
+        }
+
     }
 }

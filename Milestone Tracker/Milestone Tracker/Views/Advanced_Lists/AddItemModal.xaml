@@ -21,9 +21,9 @@
             <StackLayout Padding="20">
                 <Label Text="Add Task" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" />
 
-                <Entry Placeholder="Task Name" Text="{Binding Name, Mode=TwoWay}" Margin="10,20" MaxLength="15" FontSize="20" ClearButtonVisibility="WhileEditing"/>
-                <Entry Placeholder="Category" Text="{Binding Category, Mode=TwoWay}" Margin="10,20" MaxLength="15" FontSize="20" ClearButtonVisibility="WhileEditing"/>
-                <Entry Placeholder="Checkpoints sperated with a ','" Text="{Binding CheckpointString, Mode=TwoWay}" Margin="10,20" FontSize="20" ClearButtonVisibility="WhileEditing"/>
+                <Entry Placeholder="Task Name" Text="{Binding Name, Mode=TwoWay}" Margin="10,20" MaxLength="50" FontSize="20" ClearButtonVisibility="WhileEditing"/>
+                <Entry Placeholder="Category" Text="{Binding Category, Mode=TwoWay}" Margin="10,20" MaxLength="30" FontSize="20" ClearButtonVisibility="WhileEditing"/>
+                <Entry Keyboard="Telephone" Placeholder="Checkpoints sperated with a '-'" Text="{Binding CheckpointString, Mode=TwoWay}" Margin="10,20" FontSize="20" ClearButtonVisibility="WhileEditing"/>
 
                 
                 <Label Padding="20,0" Text="{Binding ErrorMsg,Mode=TwoWay}" TextColor="Red" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" />
@@ -38,7 +38,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="1" Text="Done" CornerRadius="10" Command="{Binding AddItemToList}" IsEnabled="{Binding DoneEnable}"/>
-                    <Button Grid.Column="3" Text="Cancel" CornerRadius="10" Command="{Binding CloseAddListModal}"/>
+                    <Button Grid.Column="3" Text="Cancel" CornerRadius="10" Command="{Binding CloseAddItemModal}"/>
                 </Grid>
 
             </StackLayout>

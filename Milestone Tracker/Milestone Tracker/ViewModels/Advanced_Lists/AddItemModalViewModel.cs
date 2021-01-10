@@ -24,13 +24,9 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             }
         }
         public int CurrentValue { get; set; }
-
         public Command CloseAddItemModal { get; }
         public Command AddItemToList { get; }
         public string ErrorMsg { get; set; }
-
-
-
 
         public AddItemModalViewModel(Grid modalGrid, PopulateList list)
         {
@@ -47,7 +43,7 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             eventCloseThisModal();
         }
 
-        private async void eventCloseThisModal()
+        public async void eventCloseThisModal()
         {
             await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
             new NavigationService().PopModalPage(false);

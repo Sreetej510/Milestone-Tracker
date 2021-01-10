@@ -1,6 +1,8 @@
 ﻿using Milestone_Tracker.Models;
+using Milestone_Tracker.Navigation;
 using Milestone_Tracker.Views.Advanced_Lists;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace Milestone_Tracker.Views
 {
@@ -16,6 +18,12 @@ namespace Milestone_Tracker.Views
         private async void TransitionModalIn()
         {
             await modalContainer.ScaleTo(1, 300, Easing.SpringOut);
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            new NavigationService().PopModalPage(false);
+            return true;
         }
 
     }

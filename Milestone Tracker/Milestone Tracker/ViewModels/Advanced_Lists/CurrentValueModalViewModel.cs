@@ -75,7 +75,7 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         public Command UpdateTapped { get; set; }
         private Grid ModalGrid;
         private Grid ModalContainer;
-        private int ModalPageCount;
+        public int ModalPageCount { get; set; }
 
         // Constructor
         public CurrentValueModalViewModel(Milestone item, Grid modalGrid, Grid modalContainer, int count)
@@ -97,13 +97,12 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         }
 
         // events
-        private async void eventCloseCurrentValueModal(object obj)
+        public async void eventCloseCurrentValueModal()
         {
             await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
-            await Task.Delay(100);
             new NavigationService().PopToListPage(ModalPageCount);
         }
-        private async void eventUpdateButtonAsync(object obj)
+        private async void eventUpdateButtonAsync()
         {
 
             Item.CurrentValue = (int)SliderValue;

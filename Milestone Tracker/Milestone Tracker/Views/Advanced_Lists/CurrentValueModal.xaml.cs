@@ -1,4 +1,5 @@
 ﻿using Milestone_Tracker.Models;
+using Milestone_Tracker.Navigation;
 using Milestone_Tracker.ViewModels.Advanced_Lists;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -43,6 +44,7 @@ namespace Milestone_Tracker.Views
 
         protected override bool OnBackButtonPressed()
         {
+            _bindingContext.eventCloseCurrentValueModal();
             return true;
         }
 

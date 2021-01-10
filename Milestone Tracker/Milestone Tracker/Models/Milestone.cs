@@ -231,7 +231,8 @@ namespace Milestone_Tracker.Models
 
 
             //color fix
-            StageBGL = ArrStageBGL[CurrentCheckpoint - 1];
+            StageBGL = ArrStageBGL[(CurrentCheckpoint-1)% 5];
+            
 
             //progress
             Progress = (float)CurrentValue / (float)CurrentEndValue;            

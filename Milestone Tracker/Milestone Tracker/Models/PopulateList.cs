@@ -68,14 +68,14 @@ namespace Milestone_Tracker.Models
 
         public void AddItemToPopulateList(string categoryInput, string name, string checkpointString, int currentValue)
         {
-            var ItemJsonString = " {\"name\" : \"" + name + "\", \"checkpoints\" : [" + checkpointString + "], \"currentValue\" :" + currentValue + "}";
+            var ItemJsonString = " {\"name\" : \"" + name + "\", \"checkpoints\" : [" + checkpointString.Replace('-',',') + "], \"currentValue\" :" + currentValue + "}";
             
             var ItemJsonObject = JObject.Parse(ItemJsonString);
 
 
-            var array = checkpointString.Split(","[0]);
+            var array = checkpointString.Split('-');
             var checkpoints = Array.ConvertAll(array, s => int.Parse(s));
-
+            Array.Sort(checkpoints);
             var jObject = JsonFIleActivities.ReadJson();
 
             var list = (JArray)jObject["onGoing"];
@@ -128,7 +128,7 @@ namespace Milestone_Tracker.Models
                 if (item["name"].ToString() == deleteItem.Name)
                 {
                     groupArray.Remove(item);
-                    allCategories.Remove(deleteItemCatCap);
+                    
                     break;
                 }
             }
@@ -138,7 +138,7 @@ namespace Milestone_Tracker.Models
             if (groupArray.Count == 0)
             {
                 list.Remove(group);
-                allCategories.Remove(deleteItemCatCap);
+                allCategories.RemoveAt(groupIndex);
                 MilestonesList.RemoveAt(groupIndex);
             }
 

@@ -21,51 +21,64 @@
             <ImageButton Source="add_circle_white.png"  HorizontalOptions="End" Padding="20,5" BackgroundColor="Transparent"  Command="{Binding ItemAdd}" IsEnabled="{Binding Enable, Mode=TwoWay}"/>
         </Grid>
         <Grid Grid.Row="1">
-            
+
             <CollectionView x:Name="Collection" ItemsSource="{Binding ItemList}" IsGrouped="True" SelectionMode="Single" SelectionChangedCommand="{Binding ItemTapped}" IsEnabled="{Binding Enable,Mode=TwoWay}" SelectedItem="{Binding TappedItem, Mode=TwoWay}">
 
-            <!-- List Category -->
-            <CollectionView.GroupHeaderTemplate>
-                <DataTemplate>
-                    <Label FontSize="25" Text="{Binding Category}" TextColor="White" FontAttributes="Bold" Padding="10, 10, 0, 5" />
-                </DataTemplate>
-            </CollectionView.GroupHeaderTemplate>
+                
+                
+                <CollectionView.EmptyView>
+                    <Grid VerticalOptions="Center" Padding="20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1.8*" />
+                        </Grid.RowDefinitions>
+                        <BoxView Color="White" Opacity="0.5" CornerRadius="20"/>
+                        <Label Text="Press Add Button on the Top to start adding lists" FontSize="Large" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Padding="20"/>
+                    </Grid>
+                </CollectionView.EmptyView>
+                
+                <!-- List Category -->
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <Label FontSize="25" Text="{Binding Category}" TextColor="White" FontAttributes="Bold" Padding="10, 10, 0, 5" />
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
             
-            <!-- List items -->
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <!-- List items -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
 
-                    <SwipeView BackgroundColor="Transparent">
+                        <SwipeView BackgroundColor="Transparent">
 
-                        <SwipeView.RightItems>
-                            <SwipeItems Mode="Reveal">
-                                <SwipeItemView Command="{Binding BindingContext.ItemDelete, Source={x:Reference Collection}}" CommandParameter="{Binding .}">
-                                    <Grid Padding="0,5,5,5">
-                                        <BoxView Color="Red" CornerRadius="0,10,0,10" />
-                                        <StackLayout WidthRequest="80" HorizontalOptions="Center" VerticalOptions="Center">
-                                            <Image HeightRequest="40" Source="delete_white.png" />
-                                            <Label Text="DELETE" TextColor="White" HorizontalTextAlignment="Center" FontSize="18"/>
-                                        </StackLayout>
-                                    </Grid>
-                                </SwipeItemView>
-                                <SwipeItemView Command="{Binding BindingContext.ItemEdit, Source={x:Reference Collection}}" CommandParameter="{Binding .}">
-                                    <Grid Padding="5,5,0,5">
-                                        <BoxView Color="White" CornerRadius="10,0,10,0" />
-                                        <StackLayout WidthRequest="80" HorizontalOptions="Center" VerticalOptions="Center">
-                                            <Image HeightRequest="40" Source="edit_black.png" />
-                                            <Label Text="EDIT" TextColor="Black" HorizontalTextAlignment="Center" FontSize="18"/>
-                                        </StackLayout>
-                                    </Grid>
-                                </SwipeItemView>
-                            </SwipeItems>
-                        </SwipeView.RightItems>
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Reveal">
+                                    <SwipeItemView Command="{Binding BindingContext.ItemDelete, Source={x:Reference Collection}}" CommandParameter="{Binding .}">
+                                        <Grid Padding="0,5,5,5">
+                                            <BoxView Color="Red" CornerRadius="0,10,0,10" />
+                                            <StackLayout WidthRequest="80" HorizontalOptions="Center" VerticalOptions="Center">
+                                                <Image HeightRequest="40" Source="delete_white.png" />
+                                                <Label Text="DELETE" TextColor="White" HorizontalTextAlignment="Center" FontSize="18"/>
+                                            </StackLayout>
+                                        </Grid>
+                                    </SwipeItemView>
+                                    <SwipeItemView Command="{Binding BindingContext.ItemEdit, Source={x:Reference Collection}}" CommandParameter="{Binding .}">
+                                        <Grid Padding="5,5,0,5">
+                                            <BoxView Color="White" CornerRadius="10,0,10,0" />
+                                            <StackLayout WidthRequest="80" HorizontalOptions="Center" VerticalOptions="Center">
+                                                <Image HeightRequest="40" Source="edit_black.png" />
+                                                <Label Text="EDIT" TextColor="Black" HorizontalTextAlignment="Center" FontSize="18"/>
+                                            </StackLayout>
+                                        </Grid>
+                                    </SwipeItemView>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
 
-                        <StackLayout Orientation="Horizontal" Spacing="0" Padding="5, 2">
+                            <StackLayout Orientation="Horizontal" Spacing="0" Padding="5, 2">
                                 <!-- Background -->
                                 <Grid WidthRequest="60" MinimumWidthRequest="60">
-                                <BoxView BackgroundColor="{Binding StageBGL}" CornerRadius="10, 0, 10, 0" />
+                                    <BoxView BackgroundColor="{Binding StageBGL}" CornerRadius="10, 0, 10, 0" />
 
-                                <!-- Current Stage -->
+                                    <!-- Current Stage -->
                                     <StackLayout Grid.Column="0" VerticalOptions="Center">
                                         <Label FontSize="15" Text="Stage" TextColor="WhiteSmoke" HorizontalOptions="Center" />
                                         <Label FontSize="40" FontAttributes="Bold" Text="{Binding CurrentCheckpoint}" TextColor="White" HorizontalOptions="Center" />
@@ -86,16 +99,17 @@
                                             <ColumnDefinition Width="0.2*" />
                                         </Grid.ColumnDefinitions>
                                         <local:CustomLabel  HorizontalOptions="Start" Grid.RowSpan="2" Grid.Row="0" Grid.Column="0" FontSize="17" Text="{Binding Name}" TextColor="White" />
-                                    <control:ProgressRing RingThickness="10" Grid.RowSpan="2" Grid.Column="1" Progress="{Binding Progress}" RingProgressColor="{Binding StageBGL}" RingBaseColor="Transparent" Rotation="180" />
+                                        <control:ProgressRing RingThickness="10" Grid.RowSpan="2" Grid.Column="1" Progress="{Binding Progress}" RingProgressColor="{Binding StageBGL}" RingBaseColor="Transparent" Rotation="180" />
                                         <Label HorizontalOptions="End" Grid.Row="1" Grid.Column="0" FontSize="15" Text="{Binding ProgressRatio}"  TextColor="White" />
                                     </Grid>
                                 </Grid>
                             </StackLayout>
 
                         </SwipeView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                
+            </CollectionView>
         
         </Grid>
 

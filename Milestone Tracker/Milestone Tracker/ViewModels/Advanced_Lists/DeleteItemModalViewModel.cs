@@ -23,6 +23,7 @@ namespace Milestone_Tracker.Views.Advanced_Lists
 
         private void eventCancelDelete(object obj)
         {
+
             new NavigationService().PopModalPage(false);
         }
 
