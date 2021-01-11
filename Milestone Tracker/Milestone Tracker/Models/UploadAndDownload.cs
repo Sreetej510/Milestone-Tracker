@@ -37,7 +37,7 @@ namespace Milestone_Tracker.Models
                         {
                             AuthTokenAsyncFactory = () => Task.FromResult(auth.FirebaseToken)
                         });
-                    await fireStorage.Child("Milestones").Child(uid.LocalId).Child(dirName).Child(itemName).PutAsync(stream);
+                    await Task.Run(() => fireStorage.Child("Milestones").Child(uid.LocalId).Child(dirName).Child(itemName).PutAsync(stream));
                 }
             }
         }

@@ -1,4 +1,5 @@
 ﻿using Milestone_Tracker.ViewModels.HomePage;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,8 +19,11 @@ namespace Milestone_Tracker.Views.HomePage
 
         protected override void OnAppearing()
         {
-            dashPageViewModal.UpdateList();
-            dashPageViewModal.Enable = true;
+            Task.Run(() =>
+            {
+                dashPageViewModal.UpdateList();
+                dashPageViewModal.Enable = true;
+            });
             base.OnAppearing();
         }
     }

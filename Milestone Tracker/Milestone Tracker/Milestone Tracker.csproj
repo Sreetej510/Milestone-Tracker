@@ -14,6 +14,8 @@
 		<None Remove="Data\Fortnite.json" />
 	</ItemGroup>
 
+
+
 	<ItemGroup>
 		<EmbeddedResource Include="Data\Fortnite.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>

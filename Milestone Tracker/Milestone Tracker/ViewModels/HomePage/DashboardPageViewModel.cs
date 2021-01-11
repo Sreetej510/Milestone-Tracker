@@ -8,6 +8,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker.ViewModels.HomePage
@@ -41,41 +42,41 @@ namespace Milestone_Tracker.ViewModels.HomePage
             }
         }
 
-        public Command AddList { get; }
-        public Command DeleteList { get; }
-        public Command BackupList { get; }
+        public Command AddList { get; set; }
+        public Command DeleteList { get; set; }
+        public Command BackupList { get; set; }
+        public ReadAndWriteJson JsonFIleActivities { get; }
 
         //Constructor
         public DashboardPageViewModel()
         {
-            var FirstUsePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "FirstUse.txt");
-
-            if (!File.Exists(FirstUsePath))
+            JsonFIleActivities = new ReadAndWriteJson("DashBoardList", "AppData", "dashboard");
+            Task.Run(() =>
             {
-                File.WriteAllText(FirstUsePath, "true");
-                FirstUse();
-            }
+                AddList = new Command(EventAddList);
+                DeleteList = new Command(EventDeleteList);
+                BackupList = new Command(EventBackupList);
+                ItemTapped = new Command(EventOpenList);
+            });
 
-            DashboardCollection = new ObservableCollection<PageList>();
+            Task.Run(() =>
+            {
+                DashboardCollection = new ObservableCollection<PageList>();
+                UpdateList();
+            });
 
-            UpdateList();
-            AddList = new Command(EventAddList);
-            DeleteList = new Command(EventDeleteList);
-            BackupList = new Command(EventBackupList);
-            ItemTapped = new Command(EventOpenList);
             Enable = true;
         }
 
         private void EventBackupList(object obj)
         {
             var upload = new UploadAndDownload();
-            upload.UploadTOStorage();
+            Task.Run(() => upload.UploadTOStorage());
         }
 
         //methods
         public void UpdateList()
         {
-            var JsonFIleActivities = new ReadAndWriteJson("DashBoardList", "AppData", "dashboard");
             JObject jObject = JsonFIleActivities.ReadJson();
 
             var list = (JArray)jObject["list"];
@@ -87,45 +88,6 @@ namespace Milestone_Tracker.ViewModels.HomePage
                 {
                     DashboardCollection.Add(new PageList(item["name"].ToString(), item["color"].ToString()));
                 }
-            }
-        }
-
-        //first Start
-        public void FirstUse()
-        {
-            var directories = new string[] { "AppData", "List_Data" };
-            foreach (var directory in directories)
-            {
-                var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), directory);
-                Directory.CreateDirectory(folder);
-            }
-
-            var files = new string[] { "DashBoardList" };
-
-            foreach (var fileName in files)
-            {
-                var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "AppData");
-                var filePath = Path.Combine(folder, fileName + ".json");
-                var text = "{\"listNames\":[], \"list\": []}";
-                JObject jsonObject = JObject.Parse(text);
-                File.WriteAllText(filePath, jsonObject.ToString());
-            }
-
-            if (true)
-            {
-                var assembly = IntrospectionExtensions.GetTypeInfo(typeof(AdvancedListPage)).Assembly;
-                Stream stream = assembly.GetManifestResourceStream("Milestone_Tracker.Data.Fortnite.json");
-                string text = "";
-                using (var reader = new StreamReader(stream))
-                {
-                    text = reader.ReadToEnd();
-                }
-                var jObject = JObject.Parse(text);
-
-                var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "List_Data");
-                var filePath = Path.Combine(folder, "Fortnite.json");
-
-                File.WriteAllText(filePath, jObject.ToString());
             }
         }
 

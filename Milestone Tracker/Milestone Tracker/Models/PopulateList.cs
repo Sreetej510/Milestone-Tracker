@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker.Models
@@ -37,28 +38,30 @@ namespace Milestone_Tracker.Models
             var jObject = JsonFIleActivities.ReadJson();
 
             var list = (JArray)jObject["onGoing"];
-
-            foreach (var group in list)
+            Task.Run(() =>
             {
-                string category = group["category"].ToString();
-
-                MilestonesList.Add(new MilestoneGroup(category));
-
-                var groupIndex = MilestonesList.Count;
-
-                var itemList = group["contents"];
-
-                foreach (var item in (JArray)itemList)
+                foreach (var group in list)
                 {
-                    string name = item["name"].ToString();
+                    string category = group["category"].ToString();
 
-                    JArray jArray = (JArray)item["checkpoints"];
-                    var checkpoints = jArray.ToObject<int[]>();
+                    MilestonesList.Add(new MilestoneGroup(category));
 
-                    int currentValue = (int)item["currentValue"];
-                    MilestonesList[groupIndex - 1].Add(new Milestone(listName, category, name, checkpoints, currentValue));
+                    var groupIndex = MilestonesList.Count;
+
+                    var itemList = group["contents"];
+
+                    foreach (var item in (JArray)itemList)
+                    {
+                        string name = item["name"].ToString();
+
+                        JArray jArray = (JArray)item["checkpoints"];
+                        var checkpoints = jArray.ToObject<int[]>();
+
+                        int currentValue = (int)item["currentValue"];
+                        MilestonesList[groupIndex - 1].Add(new Milestone(listName, category, name, checkpoints, currentValue));
+                    }
                 }
-            };
+            });
         }
 
         public void AddItemToPopulateList(string categoryInput, string name, string checkpointString, int currentValue)
