@@ -12,8 +12,6 @@ namespace Milestone_Tracker
             Device.SetFlags(new[] { "SwipeView_Experimental", "Brush_Experimental" });
 
             MainPage = new NavigationPage(new DashboardPage());
-            
-            
         }
 
         protected override void OnStart()

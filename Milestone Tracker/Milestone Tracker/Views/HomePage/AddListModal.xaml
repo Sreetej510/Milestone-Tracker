@@ -1,51 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Milestone_Tracker.Views.HomePage.AddListModal"
              BackgroundColor="Transparent">
 
     <Grid x:Name="modalGrid">
-        
-        
+
         <StackLayout BackgroundColor="Black" Opacity="0.5">
             <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding CloseAddListModal}"/>
+                <TapGestureRecognizer Command="{Binding CloseAddListModal}" />
             </StackLayout.GestureRecognizers>
         </StackLayout>
 
         <Grid x:Name="modalContainer" HeightRequest="300" HorizontalOptions="Fill" VerticalOptions="Center" Margin="20" Scale="0.6">
 
-
-            <BoxView CornerRadius="10" BackgroundColor="White"/>
+            <BoxView CornerRadius="10" BackgroundColor="White" />
 
             <StackLayout Padding="20">
                 <Label Text="Add Task" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" />
 
-                <Entry Placeholder="Task Name" Text="{Binding TaskName, Mode=TwoWay}" Margin="10,20" MaxLength="15" FontSize="20" ClearButtonVisibility="WhileEditing"/>
+                <Entry Placeholder="Task Name" Text="{Binding TaskName, Mode=TwoWay}" Margin="10,20" MaxLength="15" FontSize="20" ClearButtonVisibility="WhileEditing" />
 
                 <StackLayout Margin="10" Orientation="Horizontal">
-                    
-                    
+
                     <Switch IsToggled="{Binding IsAdvanced}" OnColor="SkyBlue">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="On">
                                     <VisualState.Setters>
-                                        <Setter Property="ThumbColor" Value="DeepSkyBlue"/>
+                                        <Setter Property="ThumbColor" Value="DeepSkyBlue" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Off">
                                     <VisualState.Setters>
-                                        <Setter Property="ThumbColor" Value="LightGray"/>
+                                        <Setter Property="ThumbColor" Value="LightGray" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                     </Switch>
-                    
-                    
-                    <Label Text="Advanced Task" VerticalOptions="Center" FontSize="15"/>
-                    
+
+                    <Label Text="Advanced Task" VerticalOptions="Center" FontSize="15" />
                 </StackLayout>
 
                 <Label Padding="20,0" Text="{Binding ErrorMsg,Mode=TwoWay}" TextColor="Red" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" />
@@ -59,15 +54,10 @@
                         <ColumnDefinition Width="0.1*" />
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="1" Text="Done" CornerRadius="10" Command="{Binding AddToList}" IsEnabled="{Binding DoneEnable}"/>
-                    <Button Grid.Column="3" Text="Cancel" CornerRadius="10" Command="{Binding CloseAddListModal}"/>
+                    <Button Grid.Column="1" Text="Done" CornerRadius="10" Command="{Binding AddToList}" IsEnabled="{Binding DoneEnable}" />
+                    <Button Grid.Column="3" Text="Cancel" CornerRadius="10" Command="{Binding CloseAddListModal}" />
                 </Grid>
-
             </StackLayout>
-
-
         </Grid>
-
     </Grid>
-    
 </ContentPage>

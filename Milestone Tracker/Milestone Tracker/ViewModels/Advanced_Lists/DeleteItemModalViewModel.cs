@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace Milestone_Tracker.Views.Advanced_Lists
 {
-    class DeleteItemModalViewModel
+    internal class DeleteItemModalViewModel
     {
         public string ListName { get; }
         public Milestone DeleteItem { get; set; }
@@ -17,26 +17,22 @@ namespace Milestone_Tracker.Views.Advanced_Lists
             ListName = listName;
             DeleteItem = item;
             NewList = populateList;
-            DeleteOk = new Command(eventDeleteItem);
-            DeleteCancel = new Command(eventCancelDelete);
+            DeleteOk = new Command(EventDeleteItem);
+            DeleteCancel = new Command(EventCancelDelete);
         }
 
-        private void eventCancelDelete(object obj)
+        private void EventCancelDelete(object obj)
         {
-
             new NavigationService().PopModalPage(false);
         }
 
-        private void eventDeleteItem(object obj)
+        private void EventDeleteItem(object obj)
         {
             var populateList = (PopulateList)obj;
 
             populateList.DeletItemFromPopulateList(DeleteItem);
 
             new NavigationService().PopModalPage(false);
-
         }
-
-
     }
 }

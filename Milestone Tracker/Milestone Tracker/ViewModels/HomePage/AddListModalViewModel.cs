@@ -12,6 +12,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
         public Grid ModalGrid { get; }
         public Command CloseAddListModal { get; }
         public Command AddToList { get; }
+
         public bool DoneEnable
         {
             get
@@ -26,21 +27,27 @@ namespace Milestone_Tracker.ViewModels.HomePage
                 }
             }
         }
+
         private string _errorMsg;
 
         public string ErrorMsg
         {
             get { return _errorMsg; }
-            set { _errorMsg = value;
-                OnPropertyChanged(); 
+            set
+            {
+                _errorMsg = value;
+                OnPropertyChanged();
             }
         }
 
         private string _taskName;
+
         public string TaskName
         {
             get { return _taskName; }
-            set { _taskName = value;
+            set
+            {
+                _taskName = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(DoneEnable));
             }
@@ -48,17 +55,16 @@ namespace Milestone_Tracker.ViewModels.HomePage
 
         public bool IsAdvanced { get; set; }
 
-        private static string[] colors = new string[] { "#F72585", "#7209B7", "#3A0CA3", "#4361EE", "#4CC9F0", "#fee440", "#9b5de5", "#f15bb5", "00bbf9", "#00f5d4" };
+        private static readonly string[] colors = new string[] { "#F72585", "#7209B7", "#3A0CA3", "#4361EE", "#4CC9F0", "#fee440", "#9b5de5", "#f15bb5", "00bbf9", "#00f5d4" };
 
         public AddListModalViewModel(Grid modalGrid)
         {
             ModalGrid = modalGrid;
-            CloseAddListModal = new Command(eventCloseThisModal);
-            AddToList = new Command(eventAddToList);
+            CloseAddListModal = new Command(EventCloseThisModal);
+            AddToList = new Command(EventAddToList);
         }
 
-
-        private void eventAddToList(object obj)
+        private void EventAddToList(object obj)
         {
             // change to normal
 
@@ -71,7 +77,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
             }
 
             var rnd = new Random();
-            var pageColor = colors[rnd.Next(9)]; 
+            var pageColor = colors[rnd.Next(9)];
 
             var JsonFIleActivities = new ReadAndWriteJson("DashBoardList", "AppData", type);
             JObject jObject = JsonFIleActivities.ReadJson();
@@ -98,11 +104,9 @@ namespace Milestone_Tracker.ViewModels.HomePage
 
                 new NavigationService().PopModalPage(false);
             }
-
-            
         }
 
-        public async void eventCloseThisModal()
+        public async void EventCloseThisModal()
         {
             await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
             new NavigationService().PopModalPage(false);

@@ -1,22 +1,20 @@
-﻿using Firebase.Auth;
-using Milestone_Tracker.Models;
+﻿using Milestone_Tracker.Models;
 using Milestone_Tracker.Navigation;
 using Milestone_Tracker.Views;
 using Milestone_Tracker.Views.Advanced_Lists;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker.ViewModels.Advanced_Lists
 {
-    class MainPageViewModel : INotifyPropertyChanged
+    internal class AdvancedListPageViewModel : INotifyPropertyChanged
     {
-
         //Fields
         public string ListName { get; }
-        public PopulateList populateList { get; private set; }
+
+        public PopulateList PopulateList { get; private set; }
         public ObservableCollection<MilestoneGroup> ItemList { get; set; }
         public ObservableCollection<MilestoneGroup> SearchItemList { get; set; }
         public Command ItemTapped { get; set; }
@@ -28,13 +26,16 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         public bool Enable
         {
             get { return _enable; }
-            set { _enable = value;
+            set
+            {
+                _enable = value;
                 OnPropertyChanged();
             }
         }
 
         public Command ItemEdit { get; set; }
         private Milestone _tappedItem;
+
         public Milestone TappedItem
         {
             get { return _tappedItem; }
@@ -52,35 +53,34 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         // On Property Change
         public event PropertyChangedEventHandler PropertyChanged;
 
-        void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         // constuctor
-        public MainPageViewModel(string listName)
+        public AdvancedListPageViewModel(string listName)
         {
             //GetProfileInformationAndRefreshToken();
             ListName = listName;
-            populateList = new PopulateList(listName);
-            ItemList = populateList.MilestonesList;
-            ItemTapped = new Command(eventItemTapped);
-            ItemDelete = new Command(eventItemDelete);
-            ItemEdit = new Command(eventItemEdit);
-            ItemAdd = new Command(eventItemAdd);
+            PopulateList = new PopulateList(listName);
+            ItemList = PopulateList.MilestonesList;
+            ItemTapped = new Command(EventItemTapped);
+            ItemDelete = new Command(EventItemDelete);
+            ItemEdit = new Command(EventItemEdit);
+            ItemAdd = new Command(EventItemAdd);
             Enable = true;
         }
 
         // events
-        private async void eventItemAdd(object obj)
+        private async void EventItemAdd(object obj)
         {
             Enable = false;
-            await new NavigationService().PushModalPage(new AddItemModal(populateList), false);
+            await new NavigationService().PushModalPage(new AddItemModal(PopulateList), false);
         }
 
-        private async void eventItemTapped()
+        private async void EventItemTapped()
         {
-
             var item = (Milestone)TappedItem;
             TappedItem = null;
             if (item != null && Enable)
@@ -90,16 +90,16 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             }
         }
 
-        private async void eventItemEdit(object obj)
+        private async void EventItemEdit(object obj)
         {
             var item = (Milestone)obj;
             await new NavigationService().PushModalPage(new CurrentValueModal(item, 1), false);
         }
 
-        private async void eventItemDelete(object obj)
+        private async void EventItemDelete(object obj)
         {
             var item = (Milestone)obj;
-            await new NavigationService().PushModalPage(new DeleteItemModal(ListName ,item, populateList), false);
+            await new NavigationService().PushModalPage(new DeleteItemModal(ListName, item, PopulateList), false);
         }
 
         //Auto Login
@@ -118,7 +118,5 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         //    }
 
         //}
-
-        
     }
 }

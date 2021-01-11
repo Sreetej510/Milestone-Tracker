@@ -1,32 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Milestone_Tracker.Views.CurrentValueModal"
-             xmlns:control="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
              xmlns:local="clr-namespace:Milestone_Tracker.Models"
+             xmlns:control="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
+             x:Class="Milestone_Tracker.Views.CurrentValueModal"
              BackgroundColor ="Transparent">
-     
+
     <Grid x:Name="modalGrid">
 
         <!-- Title Name -->
         <StackLayout  BackgroundColor="Black" Opacity="0.4">
             <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding CloseCurrentValueModal}"/>
+                <TapGestureRecognizer Command="{Binding CloseCurrentValueModal}" />
             </StackLayout.GestureRecognizers>
         </StackLayout>
 
         <Grid x:Name="modalContainer" HeightRequest="220" HorizontalOptions="Fill" VerticalOptions="Center" TranslationY="-1000">
-            
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="94*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="94*" />
+                <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
 
-            <BoxView CornerRadius="10" Grid.Column="1" BackgroundColor="{Binding Item.StageBGL}"/>
+            <BoxView CornerRadius="10" Grid.Column="1" BackgroundColor="{Binding Item.StageBGL}" />
 
             <Grid Padding="25" Grid.Column="1" RowSpacing="0" ColumnSpacing="0">
-                
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.4*" />
                     <RowDefinition Height="0.2*" />
@@ -36,43 +36,38 @@
                     <ColumnDefinition Width="0.5*" />
                     <ColumnDefinition Width="0.2*" />
                 </Grid.ColumnDefinitions>
-                
+
                 <!-- Name -->
-                <local:CustomLabel Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Item.Name}" TextColor="White" FontSize="20"/>
+                <local:CustomLabel Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Item.Name}" TextColor="White" FontSize="20" />
 
                 <!-- Stage and Progress -->
-                <Grid Grid.Row="1" Grid.Column="0" >
-                    
+                <Grid Grid.Row="1" Grid.Column="0">
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.5*" />
                         <ColumnDefinition Width="0.5*" />
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Column="0" Text="{Binding Item.CurrentCheckpoint, StringFormat='Stage  :  {0:F0}'}" TextColor="White" FontSize="15" />
-                    
+
                     <StackLayout Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End" Spacing="0">
-                        <Label Text="{Binding SliderValue}" TextColor="White" FontSize="18" FontAttributes="Bold"/>
-                        <Label VerticalOptions="Center" Text="{Binding Item.CurrentEndValue, StringFormat=' / {0:F0}'}"  TextColor="White" FontSize="15"/>
+                        <Label Text="{Binding SliderValue}" TextColor="White" FontSize="18" FontAttributes="Bold" />
+                        <Label VerticalOptions="Center" Text="{Binding Item.CurrentEndValue, StringFormat=' / {0:F0}'}"  TextColor="White" FontSize="15" />
                     </StackLayout>
-                    
                 </Grid>
 
                 <!-- Progress ring -->
-                <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" >
-                    <Button WidthRequest="50" Background="Transparent" TextColor="White" Text="{Binding ButtonText}" Command="{Binding UpdateTapped}"  />
-                    <control:ProgressRing RingThickness="10" RingProgressColor="WhiteSmoke" RingBaseColor="Transparent" Rotation="180" Progress="{Binding RingProgress}"/>
+                <Grid Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+                    <Button WidthRequest="50" Background="Transparent" TextColor="White" Text="{Binding ButtonText}" Command="{Binding UpdateTapped}" />
+                    <control:ProgressRing RingThickness="10" RingProgressColor="WhiteSmoke" RingBaseColor="Transparent" Rotation="180" Progress="{Binding RingProgress}" />
                 </Grid>
-             
+
                 <!-- Slider -->
-                <Slider Grid.Row="2" Grid.Column="0" MinimumTrackColor="White" ThumbColor="White" 
-                        Maximum="{Binding SliderEndValue}" 
-                        Minimum="{Binding SliderStartValue}" 
-                        Value="{Binding SliderValue, Mode=TwoWay}" ValueChanged="Slider_ValueChanged"/>
-                
+                <Slider Grid.Row="2" Grid.Column="0" MinimumTrackColor="White" ThumbColor="White"
+                        Maximum="{Binding SliderEndValue}"
+                        Minimum="{Binding SliderStartValue}"
+                        Value="{Binding SliderValue, Mode=TwoWay}" ValueChanged="Slider_ValueChanged" />
             </Grid>
-            
         </Grid>
-        
     </Grid>
-    
 </ContentPage>

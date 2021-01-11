@@ -1,28 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Milestone_Tracker.Views.HomePage.DeleteListModal"
              BackgroundColor="Transparent">
 
     <Grid x:Name="modalGrid">
 
-
         <StackLayout BackgroundColor="Black" Opacity="0.5">
             <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding CloseDeleteListModal}"/>
+                <TapGestureRecognizer Command="{Binding CloseDeleteListModal}" />
             </StackLayout.GestureRecognizers>
         </StackLayout>
 
         <Grid x:Name="modalContainer" HeightRequest="300" HorizontalOptions="Fill" VerticalOptions="Center" Margin="20" Scale="0.6">
 
-            <BoxView CornerRadius="10" BackgroundColor="White"/>
+            <BoxView CornerRadius="10" BackgroundColor="White" />
 
             <StackLayout Padding="20">
                 <Label Text="Delete Task" TextColor="Black" FontSize="25" HorizontalTextAlignment="Center" />
 
-                <Label Text="Type the name of the Task to delete." Margin="10,10" FontSize="16" TextColor="Black"/>
+                <Label Text="Type the name of the Task to delete." Margin="10,10" FontSize="16" TextColor="Black" />
 
-                <Entry Placeholder="Task Name" Text="{Binding TaskName, Mode=TwoWay}" Margin="10,10" MaxLength="15" FontSize="20" ClearButtonVisibility="WhileEditing"/>
+                <Entry Placeholder="Task Name" Text="{Binding TaskName, Mode=TwoWay}" Margin="10,10" MaxLength="15" FontSize="20" ClearButtonVisibility="WhileEditing" />
 
                 <Label Padding="20,0" Text="{Binding ErrorMsg,Mode=TwoWay}" TextColor="Red" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" />
 
@@ -35,16 +34,10 @@
                         <ColumnDefinition Width="0.1*" />
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="1" Text="Delete" TextColor="Red" CornerRadius="10" Command="{Binding DeleteFromList}" IsEnabled="{Binding DoneEnable}"/>
-                    <Button Grid.Column="3" Text="Cancel" CornerRadius="10" Command="{Binding CloseDeleteListModal}"/>
+                    <Button Grid.Column="1" Text="Delete" TextColor="Red" CornerRadius="10" Command="{Binding DeleteFromList}" IsEnabled="{Binding DoneEnable}" />
+                    <Button Grid.Column="3" Text="Cancel" CornerRadius="10" Command="{Binding CloseDeleteListModal}" />
                 </Grid>
-
             </StackLayout>
-
-
         </Grid>
-
-
     </Grid>
-
 </ContentPage>

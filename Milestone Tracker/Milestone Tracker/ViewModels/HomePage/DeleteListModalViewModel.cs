@@ -4,16 +4,16 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker.ViewModels.HomePage
 {
-    class DeleteListModalViewModel : BindableObject
+    internal class DeleteListModalViewModel : BindableObject
     {
         public Grid ModalGrid { get; }
         public Command CloseDeleteListModal { get; }
         public Command DeleteFromList { get; }
+
         public bool DoneEnable
         {
             get
@@ -28,7 +28,9 @@ namespace Milestone_Tracker.ViewModels.HomePage
                 }
             }
         }
+
         private string _errorMsg;
+
         public string ErrorMsg
         {
             get { return _errorMsg; }
@@ -38,7 +40,9 @@ namespace Milestone_Tracker.ViewModels.HomePage
                 OnPropertyChanged();
             }
         }
+
         private string _taskName;
+
         public string TaskName
         {
             get { return _taskName; }
@@ -50,18 +54,16 @@ namespace Milestone_Tracker.ViewModels.HomePage
             }
         }
 
-
         // Constructor
         public DeleteListModalViewModel(Grid modalGrid)
         {
             ModalGrid = modalGrid;
-            CloseDeleteListModal = new Command(eventCloseThisModal);
-            DeleteFromList = new Command(eventDeleteFromList);
+            CloseDeleteListModal = new Command(EventCloseThisModal);
+            DeleteFromList = new Command(EventDeleteFromList);
         }
 
-
         // Events
-        private void eventDeleteFromList(object obj)
+        private void EventDeleteFromList(object obj)
         {
             var JsonFIleActivities = new ReadAndWriteJson("DashBoardList", "AppData", "advanced");
             JObject jObject = JsonFIleActivities.ReadJson();
@@ -92,11 +94,10 @@ namespace Milestone_Tracker.ViewModels.HomePage
             }
         }
 
-        public async void eventCloseThisModal()
+        public async void EventCloseThisModal()
         {
             await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
             new NavigationService().PopModalPage(false);
         }
     }
-
 }

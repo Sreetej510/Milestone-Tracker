@@ -3,15 +3,16 @@ using Xamarin.Forms;
 
 namespace Milestone_Tracker.Views.Advanced_Lists
 {
-    public partial class MainPage : ContentPage
+    public partial class AdvancedListPage : ContentPage
     {
-        private MainPageViewModel bindObject;
-        public MainPage(string pageName)
+        private AdvancedListPageViewModel bindObject;
+
+        public AdvancedListPage(string pageName)
         {
             NavigationPage.SetHasBackButton(this, false);
             InitializeComponent();
 
-            bindObject = new MainPageViewModel(pageName);
+            bindObject = new AdvancedListPageViewModel(pageName);
             BindingContext = bindObject;
         }
 
@@ -20,6 +21,5 @@ namespace Milestone_Tracker.Views.Advanced_Lists
             bindObject.Enable = true;
             base.OnDisappearing();
         }
-
     }
 }

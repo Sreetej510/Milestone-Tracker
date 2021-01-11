@@ -12,13 +12,14 @@ using Xamarin.Forms;
 
 namespace Milestone_Tracker.ViewModels.HomePage
 {
-    class DashboardPageViewModel : BindableObject
+    internal class DashboardPageViewModel : BindableObject
     {
-        public ObservableCollection<pageList> DashboardCollection { get; set; }
+        public ObservableCollection<PageList> DashboardCollection { get; set; }
         public Command ItemTapped { get; set; }
 
-        private pageList _tappedItem;
-        public pageList TappedItem
+        private PageList _tappedItem;
+
+        public PageList TappedItem
         {
             get { return _tappedItem; }
             set
@@ -28,7 +29,8 @@ namespace Milestone_Tracker.ViewModels.HomePage
             }
         }
 
-        private bool _enable;  
+        private bool _enable;
+
         public bool Enable
         {
             get { return _enable; }
@@ -47,24 +49,24 @@ namespace Milestone_Tracker.ViewModels.HomePage
         public DashboardPageViewModel()
         {
             var FirstUsePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "FirstUse.txt");
-            
+
             if (!File.Exists(FirstUsePath))
             {
-                File.WriteAllText(FirstUsePath,"true");
+                File.WriteAllText(FirstUsePath, "true");
                 FirstUse();
             }
 
-            DashboardCollection = new ObservableCollection<pageList>();
+            DashboardCollection = new ObservableCollection<PageList>();
 
             UpdateList();
-            AddList = new Command(eventAddList);
-            DeleteList = new Command(eventDeleteList);
-            BackupList = new Command(eventBackupList);
-            ItemTapped = new Command(eventOpenList);
+            AddList = new Command(EventAddList);
+            DeleteList = new Command(EventDeleteList);
+            BackupList = new Command(EventBackupList);
+            ItemTapped = new Command(EventOpenList);
             Enable = true;
         }
 
-        private void eventBackupList(object obj)
+        private void EventBackupList(object obj)
         {
             var upload = new UploadAndDownload();
             upload.UploadTOStorage();
@@ -83,23 +85,22 @@ namespace Milestone_Tracker.ViewModels.HomePage
             {
                 foreach (var item in list)
                 {
-                    DashboardCollection.Add(new pageList(item["name"].ToString(), item["color"].ToString()));
+                    DashboardCollection.Add(new PageList(item["name"].ToString(), item["color"].ToString()));
                 }
             }
-
         }
 
         //first Start
         public void FirstUse()
         {
-            var directories = new string[] {"AppData","List_Data" };
+            var directories = new string[] { "AppData", "List_Data" };
             foreach (var directory in directories)
             {
                 var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), directory);
                 Directory.CreateDirectory(folder);
             }
 
-            var files = new string[] {"DashBoardList"};
+            var files = new string[] { "DashBoardList" };
 
             foreach (var fileName in files)
             {
@@ -112,7 +113,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
 
             if (true)
             {
-                var assembly = IntrospectionExtensions.GetTypeInfo(typeof(MainPage)).Assembly;
+                var assembly = IntrospectionExtensions.GetTypeInfo(typeof(AdvancedListPage)).Assembly;
                 Stream stream = assembly.GetManifestResourceStream("Milestone_Tracker.Data.Fortnite.json");
                 string text = "";
                 using (var reader = new StreamReader(stream))
@@ -129,28 +130,27 @@ namespace Milestone_Tracker.ViewModels.HomePage
         }
 
         // command events
-        private async void eventAddList(object obj)
+        private async void EventAddList(object obj)
         {
             Enable = false;
-           await new NavigationService().PushModalPage(new AddListModal(),false);
+            await new NavigationService().PushModalPage(new AddListModal(), false);
         }
 
-        private async void eventOpenList(object obj)
+        private async void EventOpenList(object obj)
         {
             if (TappedItem != null)
             {
                 Enable = false;
-                var item = (pageList)TappedItem;
+                var item = (PageList)TappedItem;
                 TappedItem = null;
-                await new NavigationService().PushPage(new MainPage(item.PageName));
-            }            
+                await new NavigationService().PushPage(new AdvancedListPage(item.PageName));
+            }
         }
 
-        private async void eventDeleteList(object obj)
+        private async void EventDeleteList(object obj)
         {
             Enable = false;
-           await new NavigationService().PushModalPage(new DeleteListModal(), false);
+            await new NavigationService().PushModalPage(new DeleteListModal(), false);
         }
-
     }
 }

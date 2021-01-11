@@ -7,27 +7,25 @@ namespace Milestone_Tracker.Views.HomePage
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddListModal : ContentPage
     {
-        private AddListModalViewModel _bindingContext;
+        private readonly AddListModalViewModel _bindingContext;
 
         public AddListModal()
         {
             InitializeComponent();
             TransitionModalIn();
-            _bindingContext = new AddListModalViewModel(modalGrid);            
-            BindingContext = _bindingContext;            
+            _bindingContext = new AddListModalViewModel(modalGrid);
+            BindingContext = _bindingContext;
         }
-
 
         private async void TransitionModalIn()
         {
-            await modalContainer.ScaleTo(1,300,Easing.SpringOut);
+            await modalContainer.ScaleTo(1, 300, Easing.SpringOut);
         }
 
         protected override bool OnBackButtonPressed()
         {
-            _bindingContext.eventCloseThisModal();
+            _bindingContext.EventCloseThisModal();
             return true;
         }
-
     }
 }

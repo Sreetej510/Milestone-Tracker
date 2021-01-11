@@ -1,14 +1,12 @@
 ﻿using Firebase.Auth;
 using Milestone_Tracker.Navigation;
-using Milestone_Tracker.Views.HomePage;
 using Newtonsoft.Json;
 using System;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker.ViewModels.Login
 {
-    class LoginPageViewModel : BindableObject
+    internal class LoginPageViewModel : BindableObject
     {
         public Command Login { get; set; }
 
@@ -29,6 +27,7 @@ namespace Milestone_Tracker.ViewModels.Login
                 OnPropertyChanged();
             }
         }
+
         public string Password
         {
             get
@@ -44,10 +43,10 @@ namespace Milestone_Tracker.ViewModels.Login
 
         public LoginPageViewModel()
         {
-            Login = new Command(eventLogin);
+            Login = new Command(EventLogin);
         }
 
-        private async void eventLogin(object obj)
+        private async void EventLogin(object obj)
         {
             var authProvider = new FirebaseAuthProvider(new FirebaseConfig(WebAPIkey));
             try
@@ -55,10 +54,9 @@ namespace Milestone_Tracker.ViewModels.Login
                 var auth = await authProvider.SignInWithEmailAndPasswordAsync(Username, Password);
                 var content = await auth.GetFreshAuthAsync();
                 var serializedcontnet = JsonConvert.SerializeObject(content);
-                Preferences.Set("MyFirebaseRefreshToken", serializedcontnet);
                 new NavigationService().PopPage();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 await App.Current.MainPage.DisplayAlert("Alert", "Invalid useremail or password", "OK");
             }

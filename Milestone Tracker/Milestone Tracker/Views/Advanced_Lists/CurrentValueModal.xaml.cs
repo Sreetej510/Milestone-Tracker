@@ -1,5 +1,4 @@
 ﻿using Milestone_Tracker.Models;
-using Milestone_Tracker.Navigation;
 using Milestone_Tracker.ViewModels.Advanced_Lists;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -9,7 +8,8 @@ namespace Milestone_Tracker.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CurrentValueModal : ContentPage
     {
-        private CurrentValueModalViewModel _bindingContext;
+        private readonly CurrentValueModalViewModel _bindingContext;
+
         public CurrentValueModal(Milestone item, int count)
         {
             InitializeComponent();
@@ -44,9 +44,8 @@ namespace Milestone_Tracker.Views
 
         protected override bool OnBackButtonPressed()
         {
-            _bindingContext.eventCloseCurrentValueModal();
+            _bindingContext.EventCloseCurrentValueModal();
             return true;
         }
-
     }
 }

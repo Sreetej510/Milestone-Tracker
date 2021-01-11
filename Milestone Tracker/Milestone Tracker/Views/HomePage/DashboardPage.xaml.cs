@@ -1,5 +1,4 @@
 ﻿using Milestone_Tracker.ViewModels.HomePage;
-using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -8,7 +7,7 @@ namespace Milestone_Tracker.Views.HomePage
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DashboardPage : ContentPage
     {
-        private DashboardPageViewModel dashPageViewModal;
+        private readonly DashboardPageViewModel dashPageViewModal;
 
         public DashboardPage()
         {
@@ -23,6 +22,5 @@ namespace Milestone_Tracker.Views.HomePage
             dashPageViewModal.Enable = true;
             base.OnAppearing();
         }
-
     }
 }

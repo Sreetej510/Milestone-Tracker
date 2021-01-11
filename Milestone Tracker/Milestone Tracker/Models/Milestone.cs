@@ -9,9 +9,9 @@ namespace Milestone_Tracker.Models
 {
     public class Milestone : INotifyPropertyChanged
     {
-
         // dummy fields
         public string D_Name { get; set; }
+
         public int D_NumOfCheckpoints { get; set; }
         public List<int> D_CheckpointValues { get; set; }
         public int D_CurrentCheckpoint { get; set; }
@@ -23,18 +23,14 @@ namespace Milestone_Tracker.Models
         public float D_Progress { get; set; }
         public string D_StageBGL { get; set; }
 
-
-        void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
-
-
         // fields
 
-        private string ListName;
+        private readonly string ListName;
 
         public string Category { get; set; }
 
@@ -47,6 +43,7 @@ namespace Milestone_Tracker.Models
                 OnPropertyChanged();
             }
         }
+
         public int NumOfCheckpoints
         {
             get => D_NumOfCheckpoints;
@@ -56,6 +53,7 @@ namespace Milestone_Tracker.Models
                 OnPropertyChanged();
             }
         }
+
         public List<int> CheckpointValues
         {
             get => D_CheckpointValues;
@@ -65,6 +63,7 @@ namespace Milestone_Tracker.Models
                 OnPropertyChanged();
             }
         }
+
         public int CurrentCheckpoint
         {
             get => D_CurrentCheckpoint;
@@ -74,6 +73,7 @@ namespace Milestone_Tracker.Models
                 OnPropertyChanged();
             }
         }
+
         public int StartValue
         {
             get => D_StartValue;
@@ -83,6 +83,7 @@ namespace Milestone_Tracker.Models
                 OnPropertyChanged();
             }
         }
+
         public int EndValue
         {
             get => D_EndValue;
@@ -92,6 +93,7 @@ namespace Milestone_Tracker.Models
                 OnPropertyChanged();
             }
         }
+
         public int CurrentValue
         {
             get => D_CurrentValue;
@@ -101,6 +103,7 @@ namespace Milestone_Tracker.Models
                 OnPropertyChanged();
             }
         }
+
         public int CurrentStartValue
         {
             get => D_CurrentStartValue;
@@ -110,6 +113,7 @@ namespace Milestone_Tracker.Models
                 OnPropertyChanged();
             }
         }
+
         public int CurrentEndValue
         {
             get => D_CurrentEndValue;
@@ -119,6 +123,7 @@ namespace Milestone_Tracker.Models
                 OnPropertyChanged();
             }
         }
+
         public float Progress
         {
             get => D_Progress;
@@ -141,15 +146,12 @@ namespace Milestone_Tracker.Models
 
         public bool NeedStageChange { get; set; }
 
-
         private readonly static string[] ArrStageBGL = new string[] { "#787878", "#2f9813", "#48C4FF", "#b222ff", "#fc6001", "#ffe24d" };
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-
-
         // constructor
-        public Milestone(string listName ,string category,string name, int[] checkpointValues, int currentValue)
+        public Milestone(string listName, string category, string name, int[] checkpointValues, int currentValue)
         {
             ListName = listName;
             Category = category;
@@ -163,10 +165,7 @@ namespace Milestone_Tracker.Models
 
             // current stage
             ChangeStage();
-
-
         }
-
 
         // Methods
         public void ChangeInfo(string name, byte numOfCheckpoints)
@@ -174,6 +173,7 @@ namespace Milestone_Tracker.Models
             Name = name;
             NumOfCheckpoints = numOfCheckpoints;
         }
+
         public void ChangeCheckpointInfo(int[] checkpointValues, int startValue, int endValue, int currentValue)
         {
             CheckpointValues.Clear();
@@ -182,11 +182,9 @@ namespace Milestone_Tracker.Models
             EndValue = endValue;
             CurrentValue = currentValue;
         }
-        
-        
+
         public void ChangeCurrentValue()
         {
-
             Progress = (float)CurrentValue / (float)CurrentEndValue;
             if (Progress == 1)
             {
@@ -194,7 +192,7 @@ namespace Milestone_Tracker.Models
                 ChangeStage();
             }
 
-            var json = new ReadAndWriteJson(ListName,"List_Data", "advanced");
+            var json = new ReadAndWriteJson(ListName, "List_Data", "advanced");
 
             var jObject = json.ReadJson();
 
@@ -229,14 +227,11 @@ namespace Milestone_Tracker.Models
                 }
             }
 
-
             //color fix
-            StageBGL = ArrStageBGL[(CurrentCheckpoint-1)% 5];
-            
+            StageBGL = ArrStageBGL[(CurrentCheckpoint - 1) % 5];
 
             //progress
-            Progress = (float)CurrentValue / (float)CurrentEndValue;            
+            Progress = (float)CurrentValue / (float)CurrentEndValue;
         }
-
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Milestone_Tracker.Models;
 using Milestone_Tracker.Navigation;
 using Milestone_Tracker.Views;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker.ViewModels.Advanced_Lists
@@ -58,6 +57,7 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         }
 
         private float _ringProgress;
+
         public float RingProgress
         {
             get
@@ -73,8 +73,8 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
 
         public Command CloseCurrentValueModal { get; set; }
         public Command UpdateTapped { get; set; }
-        private Grid ModalGrid;
-        private Grid ModalContainer;
+        private readonly Grid ModalGrid;
+        private readonly Grid ModalContainer;
         public int ModalPageCount { get; set; }
 
         // Constructor
@@ -91,20 +91,19 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             SliderStartValue = (int)Item.CurrentStartValue;
             RingProgress = (float)SliderValue / Item.CurrentEndValue;
 
-            CloseCurrentValueModal = new Command(eventCloseCurrentValueModal);
-            UpdateTapped = new Command(eventUpdateButtonAsync);
-
+            CloseCurrentValueModal = new Command(EventCloseCurrentValueModal);
+            UpdateTapped = new Command(EventUpdateButtonAsync);
         }
 
         // events
-        public async void eventCloseCurrentValueModal()
+        public async void EventCloseCurrentValueModal()
         {
             await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
             new NavigationService().PopToListPage(ModalPageCount);
         }
-        private async void eventUpdateButtonAsync()
-        {
 
+        private async void EventUpdateButtonAsync()
+        {
             Item.CurrentValue = (int)SliderValue;
             Item.Progress = (float)RingProgress;
             if (Item.NumOfCheckpoints != Item.D_CurrentCheckpoint && RingProgress == 1)

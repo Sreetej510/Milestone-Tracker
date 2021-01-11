@@ -1,19 +1,19 @@
 ﻿using Milestone_Tracker.Models;
 using Milestone_Tracker.Navigation;
-using System;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker.ViewModels.Advanced_Lists
 {
-    class AddItemModalViewModel : BindableObject
+    internal class AddItemModalViewModel : BindableObject
     {
         public Grid ModalGrid { get; }
 
-        private PopulateList populateList;
+        private readonly PopulateList populateList;
         public string Name { get; set; }
         public string Category { get; set; }
 
         private string _checkpointString;
+
         public string CheckpointString
         {
             get { return _checkpointString; }
@@ -23,6 +23,7 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
                 OnPropertyChanged();
             }
         }
+
         public int CurrentValue { get; set; }
         public Command CloseAddItemModal { get; }
         public Command AddItemToList { get; }
@@ -32,22 +33,21 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         {
             ModalGrid = modalGrid;
             populateList = list;
-            CloseAddItemModal = new Command(eventCloseThisModal);
-            AddItemToList = new Command(eventAddItemToList);
+            CloseAddItemModal = new Command(EventCloseThisModal);
+            AddItemToList = new Command(EventAddItemToList);
         }
 
         //event
-        private void eventAddItemToList()
+        private void EventAddItemToList()
         {
             populateList.AddItemToPopulateList(Category, Name, CheckpointString, CurrentValue);
-            eventCloseThisModal();
+            EventCloseThisModal();
         }
 
-        public async void eventCloseThisModal()
+        public async void EventCloseThisModal()
         {
             await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
             new NavigationService().PopModalPage(false);
         }
-
     }
 }

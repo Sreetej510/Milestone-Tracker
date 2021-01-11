@@ -1,49 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:control="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
              xmlns:local="clr-namespace:Milestone_Tracker.Models"
-             x:Class="Milestone_Tracker.Views.Advanced_Lists.MainPage"
+             xmlns:control="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
+             x:Class="Milestone_Tracker.Views.Advanced_Lists.AdvancedListPage"
              NavigationPage.HasNavigationBar="False">
-   
-        
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <Image Scale="1.5" Grid.RowSpan="2" Source="fortnite.png"/>
+        <Image Scale="1.5" Grid.RowSpan="2" Source="fortnite.png" />
 
         <Grid Grid.Row="0">
-            <BoxView Opacity="0.5" Color="black"/>
-            <Label Text="{Binding ListName}" FontSize="25" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center"/>
-            <ImageButton Source="add_circle_white.png"  HorizontalOptions="End" Padding="20,5" BackgroundColor="Transparent"  Command="{Binding ItemAdd}" IsEnabled="{Binding Enable, Mode=TwoWay}"/>
+            <BoxView Opacity="0.5" Color="black" />
+            <Label Text="{Binding ListName}" FontSize="25" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" />
+            <ImageButton Source="add_circle_white.png"  HorizontalOptions="End" Padding="20,5" BackgroundColor="Transparent"  Command="{Binding ItemAdd}" IsEnabled="{Binding Enable, Mode=TwoWay}" />
         </Grid>
         <Grid Grid.Row="1">
 
             <CollectionView x:Name="Collection" ItemsSource="{Binding ItemList}" IsGrouped="True" SelectionMode="Single" SelectionChangedCommand="{Binding ItemTapped}" IsEnabled="{Binding Enable,Mode=TwoWay}" SelectedItem="{Binding TappedItem, Mode=TwoWay}">
 
-                
-                
                 <CollectionView.EmptyView>
                     <Grid VerticalOptions="Center" Padding="20">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*" />
                             <RowDefinition Height="1.8*" />
                         </Grid.RowDefinitions>
-                        <BoxView Color="White" Opacity="0.5" CornerRadius="20"/>
-                        <Label Text="Press Add Button on the Top to start adding lists" FontSize="Large" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Padding="20"/>
+                        <BoxView Color="White" Opacity="0.5" CornerRadius="20" />
+                        <Label Text="Press Add Button on the Top to start adding lists" FontSize="Large" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Padding="20" />
                     </Grid>
                 </CollectionView.EmptyView>
-                
+
                 <!-- List Category -->
                 <CollectionView.GroupHeaderTemplate>
                     <DataTemplate>
                         <Label FontSize="25" Text="{Binding Category}" TextColor="White" FontAttributes="Bold" Padding="10, 10, 0, 5" />
                     </DataTemplate>
                 </CollectionView.GroupHeaderTemplate>
-            
+
                 <!-- List items -->
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -57,7 +54,7 @@
                                             <BoxView Color="Red" CornerRadius="0,10,0,10" />
                                             <StackLayout WidthRequest="80" HorizontalOptions="Center" VerticalOptions="Center">
                                                 <Image HeightRequest="40" Source="delete_white.png" />
-                                                <Label Text="DELETE" TextColor="White" HorizontalTextAlignment="Center" FontSize="18"/>
+                                                <Label Text="DELETE" TextColor="White" HorizontalTextAlignment="Center" FontSize="18" />
                                             </StackLayout>
                                         </Grid>
                                     </SwipeItemView>
@@ -66,7 +63,7 @@
                                             <BoxView Color="White" CornerRadius="10,0,10,0" />
                                             <StackLayout WidthRequest="80" HorizontalOptions="Center" VerticalOptions="Center">
                                                 <Image HeightRequest="40" Source="edit_black.png" />
-                                                <Label Text="EDIT" TextColor="Black" HorizontalTextAlignment="Center" FontSize="18"/>
+                                                <Label Text="EDIT" TextColor="Black" HorizontalTextAlignment="Center" FontSize="18" />
                                             </StackLayout>
                                         </Grid>
                                     </SwipeItemView>
@@ -104,16 +101,10 @@
                                     </Grid>
                                 </Grid>
                             </StackLayout>
-
                         </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-                
             </CollectionView>
-        
         </Grid>
-
-
-    
     </Grid>
 </ContentPage>

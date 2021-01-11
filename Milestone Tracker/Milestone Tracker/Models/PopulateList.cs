@@ -11,7 +11,7 @@ namespace Milestone_Tracker.Models
     {
         private ObservableCollection<MilestoneGroup> _milestonesList;
 
-        private ReadAndWriteJson JsonFIleActivities;
+        private readonly ReadAndWriteJson JsonFIleActivities;
 
         public string ListName { get; }
 
@@ -32,17 +32,15 @@ namespace Milestone_Tracker.Models
         {
             ListName = listName;
             MilestonesList = new ObservableCollection<MilestoneGroup>();
-            JsonFIleActivities = new ReadAndWriteJson(listName,"List_Data", "list");
+            JsonFIleActivities = new ReadAndWriteJson(listName, "List_Data", "list");
 
-            var jObject  = JsonFIleActivities.ReadJson();
+            var jObject = JsonFIleActivities.ReadJson();
 
             var list = (JArray)jObject["onGoing"];
-
 
             foreach (var group in list)
             {
                 string category = group["category"].ToString();
-                
 
                 MilestonesList.Add(new MilestoneGroup(category));
 
@@ -50,7 +48,7 @@ namespace Milestone_Tracker.Models
 
                 var itemList = group["contents"];
 
-                foreach (var item  in (JArray)itemList)
+                foreach (var item in (JArray)itemList)
                 {
                     string name = item["name"].ToString();
 
@@ -58,20 +56,16 @@ namespace Milestone_Tracker.Models
                     var checkpoints = jArray.ToObject<int[]>();
 
                     int currentValue = (int)item["currentValue"];
-                    MilestonesList[groupIndex-1].Add(new Milestone(listName, category , name, checkpoints, currentValue));
-                }   
-
+                    MilestonesList[groupIndex - 1].Add(new Milestone(listName, category, name, checkpoints, currentValue));
+                }
             };
-
         }
-
 
         public void AddItemToPopulateList(string categoryInput, string name, string checkpointString, int currentValue)
         {
-            var ItemJsonString = " {\"name\" : \"" + name + "\", \"checkpoints\" : [" + checkpointString.Replace('-',',') + "], \"currentValue\" :" + currentValue + "}";
-            
-            var ItemJsonObject = JObject.Parse(ItemJsonString);
+            var ItemJsonString = " {\"name\" : \"" + name + "\", \"checkpoints\" : [" + checkpointString.Replace('-', ',') + "], \"currentValue\" :" + currentValue + "}";
 
+            var ItemJsonObject = JObject.Parse(ItemJsonString);
 
             var array = checkpointString.Split('-');
             var checkpoints = Array.ConvertAll(array, s => int.Parse(s));
@@ -90,7 +84,7 @@ namespace Milestone_Tracker.Models
                 var group = list[groupIndex];
                 var groupArray = (JArray)group["contents"];
                 groupArray.Add(ItemJsonObject);
-                MilestonesList[groupIndex].Add(new Milestone(ListName,categoryInput, name, checkpoints, currentValue));
+                MilestonesList[groupIndex].Add(new Milestone(ListName, categoryInput, name, checkpoints, currentValue));
                 return;
             }
             else
@@ -100,17 +94,17 @@ namespace Milestone_Tracker.Models
                 var groupJsonObject = JObject.Parse(groupJsonString);
                 list.Add(groupJsonObject);
                 MilestonesList.Add(new MilestoneGroup(categoryInput) {
-                        new Milestone(ListName,categoryInput, name, checkpoints, currentValue) 
-                        });                
+                        new Milestone(ListName,categoryInput, name, checkpoints, currentValue)
+                        });
             }
 
             JsonFIleActivities.WriteJson(jObject);
-
         }
+
         public void DeletItemFromPopulateList(Milestone deleteItem)
         {
             var jObject = JsonFIleActivities.ReadJson();
-            
+
             var list = (JArray)jObject["onGoing"];
             var allCategories = (JArray)jObject["allCategories"];
             List<string> strings = allCategories.ToObject<List<string>>();
@@ -128,7 +122,7 @@ namespace Milestone_Tracker.Models
                 if (item["name"].ToString() == deleteItem.Name)
                 {
                     groupArray.Remove(item);
-                    
+
                     break;
                 }
             }
@@ -143,11 +137,6 @@ namespace Milestone_Tracker.Models
             }
 
             JsonFIleActivities.WriteJson(jObject);
-
         }
-
-    
-    
-    
     }
 }

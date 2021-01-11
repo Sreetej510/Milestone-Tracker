@@ -2,7 +2,6 @@
 using Milestone_Tracker.Navigation;
 using Milestone_Tracker.Views.Advanced_Lists;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Milestone_Tracker.Views
 {
@@ -25,6 +24,5 @@ namespace Milestone_Tracker.Views
             new NavigationService().PopModalPage(false);
             return true;
         }
-
     }
 }

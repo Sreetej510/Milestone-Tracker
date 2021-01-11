@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Milestone_Tracker.Data
 {
-    class ReadAndWriteJson
+    internal class ReadAndWriteJson
     {
         public string FilePath { get; set; }
         public string Folder { get; set; }
@@ -16,14 +16,11 @@ namespace Milestone_Tracker.Data
 
             if (!File.Exists(FilePath))
             {
-                
                 JObject jObject = JObject.Parse("{ \"allCategories\":[],\"onGoing\": []}");
-                
+
                 File.WriteAllText(FilePath, jObject.ToString());
-                
             }
         }
-    
 
         public JObject ReadJson()
         {
@@ -36,7 +33,5 @@ namespace Milestone_Tracker.Data
         {
             File.WriteAllText(FilePath, jObject.ToString());
         }
-
-
     }
 }

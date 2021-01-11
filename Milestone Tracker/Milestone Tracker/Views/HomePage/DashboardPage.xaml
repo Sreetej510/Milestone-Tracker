@@ -4,20 +4,19 @@
              x:Class="Milestone_Tracker.Views.HomePage.DashboardPage"
              NavigationPage.HasNavigationBar="False">
 
-    
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Image Scale="2.5" Grid.RowSpan="2" Source="sparkling_paris.jpg"/>
+        <Image Scale="2.5" Grid.RowSpan="2" Source="sparkling_paris.jpg" />
 
         <Grid Grid.Row="0">
-            <BoxView Opacity="0.4" Color="black"/>            
-            <Label Text="Home" FontSize="25" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center"/>
+            <BoxView Opacity="0.4" Color="black" />
+            <Label Text="Home" FontSize="25" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" />
             <StackLayout Orientation="Horizontal"  HorizontalOptions="End" Padding="20,5">
-                <ImageButton Source="add_circle_white.png" BackgroundColor="Transparent"  Command="{Binding AddList}" IsEnabled="{Binding Enable, Mode=TwoWay}"/>
-                <ImageButton Source="delete_white.png" BackgroundColor="Transparent" Command="{Binding BackupList}" IsEnabled="{Binding Enable, Mode=TwoWay}"/>
+                <ImageButton Source="add_circle_white.png" BackgroundColor="Transparent"  Command="{Binding AddList}" IsEnabled="{Binding Enable, Mode=TwoWay}" />
+                <ImageButton Source="delete_white.png" BackgroundColor="Transparent" Command="{Binding BackupList}" IsEnabled="{Binding Enable, Mode=TwoWay}" />
             </StackLayout>
         </Grid>
 
@@ -31,15 +30,15 @@
                             <RowDefinition Height="1*" />
                             <RowDefinition Height="1.8*" />
                         </Grid.RowDefinitions>
-                        <BoxView Color="White" Opacity="0.5" CornerRadius="20"/>
-                        <Label Text="Press Add Button on the Top to start adding lists" FontSize="Large" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Padding="20"/>
+                        <BoxView Color="White" Opacity="0.5" CornerRadius="20" />
+                        <Label Text="Press Add Button on the Top to start adding lists" FontSize="Large" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Padding="20" />
                     </Grid>
                 </CollectionView.EmptyView>
-                
+
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="2"/>
-                </CollectionView.ItemsLayout>                        
-            
+                    <GridItemsLayout Orientation="Vertical" Span="2" />
+                </CollectionView.ItemsLayout>
+
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <SwipeView BackgroundColor="Transparent">
@@ -47,30 +46,19 @@
                             <Grid Padding="20">
 
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="100"/>
-                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="100" />
+                                    <RowDefinition Height="40" />
                                 </Grid.RowDefinitions>
-                        
-                                <BoxView Grid.RowSpan="2" Color="Black" Opacity="0.5" CornerRadius="20"/>
-                                <BoxView Grid.Row="0" Color="{Binding PageColor}" CornerRadius="20,20,0,0"/>
+
+                                <BoxView Grid.RowSpan="2" Color="Black" Opacity="0.5" CornerRadius="20" />
+                                <BoxView Grid.Row="0" Color="{Binding PageColor}" CornerRadius="20,20,0,0" />
                                 <Label Grid.Row="0" Text="{Binding FirstLetter}" FontSize="50" HorizontalOptions="Center" VerticalOptions="Center" />
-                                <Label Grid.Row="1" Text="{Binding PageName}" FontSize="16" TextColor="White" HorizontalOptions="Center"/>
+                                <Label Grid.Row="1" Text="{Binding PageName}" FontSize="16" TextColor="White" HorizontalOptions="Center" />
                             </Grid>
                         </SwipeView>
                     </DataTemplate>
-                
                 </CollectionView.ItemTemplate>
-            
             </CollectionView>
-
-            
-                
-            
-
         </Grid>
-        
-        
-        
     </Grid>
-    
 </ContentPage>

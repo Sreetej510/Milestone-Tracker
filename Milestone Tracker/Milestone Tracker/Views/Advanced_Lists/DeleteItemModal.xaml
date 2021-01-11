@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Milestone_Tracker.Views.DeleteItemModal"
              xmlns:local="clr-namespace:Milestone_Tracker.Models"
+             x:Class="Milestone_Tracker.Views.DeleteItemModal"
              BackgroundColor ="Transparent">
 
     <Grid>
@@ -10,19 +10,19 @@
         <!-- Title Name -->
         <StackLayout  BackgroundColor="Black" Opacity="0.4">
             <StackLayout.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding CloseCurrentValueModal}"/>
+                <TapGestureRecognizer Command="{Binding CloseCurrentValueModal}" />
             </StackLayout.GestureRecognizers>
         </StackLayout>
 
         <Grid x:Name="modalContainer" HeightRequest="250" HorizontalOptions="Fill" VerticalOptions="Center" Scale="0.5">
-            
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="94*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="94*" />
+                <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
 
-            <BoxView Grid.Column="1" BackgroundColor="White" CornerRadius="10"/>
+            <BoxView Grid.Column="1" BackgroundColor="White" CornerRadius="10" />
 
             <Grid Padding="25" Grid.Column="1" ColumnSpacing="0">
 
@@ -35,10 +35,9 @@
                     <ColumnDefinition Width="0.5*" />
                     <ColumnDefinition Width="0.5*" />
                 </Grid.ColumnDefinitions>
-                
 
                 <!-- Name -->
-                <local:CustomLabel Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding DeleteItem.Name}" FontSize="20"/>
+                <local:CustomLabel Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding DeleteItem.Name}" FontSize="20" />
 
                 <!-- Stage and Progress -->
                 <Grid Grid.Row="1" Grid.ColumnSpan="2" Padding="10,0">
@@ -51,24 +50,19 @@
                     <Label Grid.Column="0" Text="{Binding DeleteItem.CurrentCheckpoint, StringFormat='Stage  :  {0:F0}'}" FontSize="18" />
 
                     <StackLayout Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End" Spacing="0">
-                        <Label Text="{Binding DeleteItem.CurrentValue}" FontSize="18" FontAttributes="Bold"/>
-                        <Label Text="{Binding DeleteItem.CurrentEndValue, StringFormat=' / {0:F0}'}" FontSize="18"/>
+                        <Label Text="{Binding DeleteItem.CurrentValue}" FontSize="18" FontAttributes="Bold" />
+                        <Label Text="{Binding DeleteItem.CurrentEndValue, StringFormat=' / {0:F0}'}" FontSize="18" />
                     </StackLayout>
-
                 </Grid>
 
                 <!-- Buttons -->
                 <Button Grid.Column="0" Grid.Row="2" BackgroundColor="Red" CornerRadius="5" Margin="10,0"
                         Text="DELETE" FontAttributes="Bold" TextColor="White" FontSize="16"
-                        Command="{Binding DeleteOk}" CommandParameter="{Binding NewList}"/>
+                        Command="{Binding DeleteOk}" CommandParameter="{Binding NewList}" />
                 <Button Grid.Column="1" Grid.Row="2" BackgroundColor="DeepSkyBlue" CornerRadius="5" Margin="10,0"
                         Text="Cancel" FontAttributes="Bold" TextColor="White" FontSize="16"
-                        Command="{Binding DeleteCancel}"/>
-
-
+                        Command="{Binding DeleteCancel}" />
             </Grid>
         </Grid>
-
     </Grid>
-    
 </ContentPage>
