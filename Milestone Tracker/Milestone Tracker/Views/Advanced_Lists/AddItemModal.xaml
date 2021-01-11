@@ -23,7 +23,7 @@
                 <Entry Placeholder="Category" Text="{Binding Category, Mode=TwoWay}" Margin="10,20" MaxLength="30" FontSize="20" ClearButtonVisibility="WhileEditing" />
                 <Entry Keyboard="Telephone" Placeholder="Checkpoints sperated with a '-'" Text="{Binding CheckpointString, Mode=TwoWay}" Margin="10,20" FontSize="20" ClearButtonVisibility="WhileEditing" />
 
-                <Label Padding="20,0" Text="{Binding ErrorMsg,Mode=TwoWay}" TextColor="Red" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" />
+                <Label Padding="20,0" Text="{Binding ErrorMsg, Mode=TwoWay}" TextColor="Red" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="15" />
 
                 <Grid Margin="0,5">
                     <Grid.ColumnDefinitions>

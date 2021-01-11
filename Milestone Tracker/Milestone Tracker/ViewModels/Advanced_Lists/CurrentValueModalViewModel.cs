@@ -57,6 +57,7 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         }
 
         private float _ringProgress;
+        private bool closeEnabled;
 
         public float RingProgress
         {
@@ -84,13 +85,12 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             ModalPageCount = count;
             ModalGrid = modalGrid;
             ModalContainer = modalContainer;
-
             ButtonText = "Update";
             SliderValue = (int)Item.CurrentValue;
             SliderEndValue = (int)Item.CurrentEndValue;
             SliderStartValue = (int)Item.CurrentStartValue;
             RingProgress = (float)SliderValue / Item.CurrentEndValue;
-
+            closeEnabled = true;
             CloseCurrentValueModal = new Command(EventCloseCurrentValueModal);
             UpdateTapped = new Command(EventUpdateButtonAsync);
         }
@@ -98,8 +98,12 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         // events
         public async void EventCloseCurrentValueModal()
         {
-            await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
-            new NavigationService().PopToListPage(ModalPageCount);
+            if (closeEnabled)
+            {
+                closeEnabled = false;
+                await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
+                new NavigationService().PopToListPage(ModalPageCount);
+            }
         }
 
         private async void EventUpdateButtonAsync()

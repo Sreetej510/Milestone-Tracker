@@ -42,6 +42,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
         }
 
         private string _taskName;
+        private bool closeEnabled;
 
         public string TaskName
         {
@@ -60,6 +61,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
             ModalGrid = modalGrid;
             CloseDeleteListModal = new Command(EventCloseThisModal);
             DeleteFromList = new Command(EventDeleteFromList);
+            closeEnabled = true;
         }
 
         // Events
@@ -96,8 +98,12 @@ namespace Milestone_Tracker.ViewModels.HomePage
 
         public async void EventCloseThisModal()
         {
-            await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
-            new NavigationService().PopModalPage(false);
+            if (closeEnabled)
+            {
+                closeEnabled = false;
+                await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
+                new NavigationService().PopModalPage(false);
+            }
         }
     }
 }

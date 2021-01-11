@@ -41,6 +41,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
         }
 
         private string _taskName;
+        private bool closeEnabled;
 
         public string TaskName
         {
@@ -62,6 +63,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
             ModalGrid = modalGrid;
             CloseAddListModal = new Command(EventCloseThisModal);
             AddToList = new Command(EventAddToList);
+            closeEnabled = true;
         }
 
         private void EventAddToList(object obj)
@@ -94,22 +96,22 @@ namespace Milestone_Tracker.ViewModels.HomePage
             else
             {
                 var jsonString = " {\"name\": \"" + TaskName + "\", \"Type\":\"" + type + "\", \"color\":\"" + pageColor + "\"}";
-
                 var jsonObject = JObject.Parse(jsonString);
-
                 list.Add(jsonObject);
                 listNames.Add(TaskName.Trim().ToUpper());
-
                 JsonFIleActivities.WriteJson(jObject);
-
                 new NavigationService().PopModalPage(false);
             }
         }
 
         public async void EventCloseThisModal()
         {
-            await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
-            new NavigationService().PopModalPage(false);
+            if (closeEnabled)
+            {
+                closeEnabled = false;
+                await ModalGrid.FadeTo(0, 100, Easing.CubicIn);
+                new NavigationService().PopModalPage(false);
+            }
         }
     }
 }

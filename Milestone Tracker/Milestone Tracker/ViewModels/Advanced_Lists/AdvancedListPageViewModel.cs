@@ -5,6 +5,7 @@ using Milestone_Tracker.Views.Advanced_Lists;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker.ViewModels.Advanced_Lists
@@ -33,6 +34,7 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             }
         }
 
+        public bool EnableTapped { get; private set; }
         public Command ItemEdit { get; set; }
         private Milestone _tappedItem;
 
@@ -63,13 +65,14 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         {
             //GetProfileInformationAndRefreshToken();
             ListName = listName;
+            Enable = true;
+            EnableTapped = true;
             PopulateList = new PopulateList(listName);
             ItemList = PopulateList.MilestonesList;
             ItemTapped = new Command(EventItemTapped);
             ItemDelete = new Command(EventItemDelete);
             ItemEdit = new Command(EventItemEdit);
             ItemAdd = new Command(EventItemAdd);
-            Enable = true;
         }
 
         // events
@@ -77,16 +80,19 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         {
             Enable = false;
             await new NavigationService().PushModalPage(new AddItemModal(PopulateList), false);
+            await Task.Delay(100);
+            Enable = true;
         }
 
         private async void EventItemTapped()
         {
             var item = (Milestone)TappedItem;
             TappedItem = null;
-            if (item != null && Enable)
+            if (item != null && EnableTapped)
             {
-                Enable = false;
+                EnableTapped = false;
                 await new NavigationService().PushModalPage(new CurrentValueModal(item, 1), false);
+                EnableTapped = true;
             }
         }
 

@@ -46,6 +46,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
         public Command DeleteList { get; set; }
         public Command BackupList { get; set; }
         public ReadAndWriteJson JsonFIleActivities { get; }
+        public bool EnableTapped { get; private set; }
 
         //Constructor
         public DashboardPageViewModel()
@@ -53,6 +54,8 @@ namespace Milestone_Tracker.ViewModels.HomePage
             JsonFIleActivities = new ReadAndWriteJson("DashBoardList", "AppData", "dashboard");
             Task.Run(() =>
             {
+                Enable = true;
+                EnableTapped = true;
                 AddList = new Command(EventAddList);
                 DeleteList = new Command(EventDeleteList);
                 BackupList = new Command(EventBackupList);
@@ -96,16 +99,19 @@ namespace Milestone_Tracker.ViewModels.HomePage
         {
             Enable = false;
             await new NavigationService().PushModalPage(new AddListModal(), false);
+            await Task.Delay(100);
+            Enable = true;
         }
 
         private async void EventOpenList(object obj)
         {
-            if (TappedItem != null)
+            if (TappedItem != null && EnableTapped)
             {
-                Enable = false;
+                EnableTapped = false;
                 var item = (PageList)TappedItem;
                 TappedItem = null;
                 await new NavigationService().PushPage(new AdvancedListPage(item.PageName));
+                EnableTapped = true;
             }
         }
 
@@ -113,6 +119,8 @@ namespace Milestone_Tracker.ViewModels.HomePage
         {
             Enable = false;
             await new NavigationService().PushModalPage(new DeleteListModal(), false);
+            await Task.Delay(100);
+            Enable = true;
         }
     }
 }

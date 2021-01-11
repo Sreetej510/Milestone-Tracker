@@ -22,7 +22,7 @@ namespace Milestone_Tracker.Views.HomePage
             Task.Run(() =>
             {
                 dashPageViewModal.UpdateList();
-                dashPageViewModal.Enable = true;
+                //dashPageViewModal.Enable = true;
             });
             base.OnAppearing();
         }

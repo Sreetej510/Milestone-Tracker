@@ -15,11 +15,5 @@ namespace Milestone_Tracker.Views.Advanced_Lists
             bindObject = new AdvancedListPageViewModel(pageName);
             BindingContext = bindObject;
         }
-
-        protected override void OnAppearing()
-        {
-            bindObject.Enable = true;
-            base.OnDisappearing();
-        }
     }
 }
