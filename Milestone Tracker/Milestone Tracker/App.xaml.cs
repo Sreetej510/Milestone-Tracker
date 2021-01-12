@@ -1,6 +1,7 @@
 ﻿using Milestone_Tracker.Data;
 using Milestone_Tracker.Views.Advanced_Lists;
 using Milestone_Tracker.Views.HomePage;
+using Milestone_Tracker.Views.Login;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
@@ -17,8 +18,8 @@ namespace Milestone_Tracker
         public App()
         {
             InitializeComponent();
-            Device.SetFlags(new[] { "SwipeView_Experimental", "Brush_Experimental" });
-            MainPage = new NavigationPage(new DashboardPage());
+            Device.SetFlags(new[] { "SwipeView_Experimental" });
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()

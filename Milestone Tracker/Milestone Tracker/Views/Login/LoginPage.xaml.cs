@@ -11,7 +11,7 @@ namespace Milestone_Tracker.Views.Login
         public LoginPage()
         {
             InitializeComponent();
-            BindingContext = new LoginPageViewModel();
+            BindingContext = new LoginPageViewModel(loginStack, signupStack);
         }
     }
 }

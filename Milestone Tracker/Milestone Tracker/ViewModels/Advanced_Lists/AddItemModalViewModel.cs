@@ -88,7 +88,7 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         }
 
         //event
-        private async void EventAddItemToList()
+        private void EventAddItemToList()
         {
             try
             {
