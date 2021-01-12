@@ -21,7 +21,7 @@
         </Grid>
         <Grid Grid.Row="1">
 
-            <CollectionView x:Name="Collection" ItemsSource="{Binding ItemList}" IsGrouped="True" SelectionMode="Single" SelectionChangedCommand="{Binding ItemTapped}" SelectedItem="{Binding TappedItem, Mode=TwoWay}">
+            <CollectionView x:Name="Collection" ItemsSource="{Binding PopulateList.MilestonesList}" IsGrouped="True" SelectionMode="Single" SelectionChangedCommand="{Binding ItemTapped}" SelectedItem="{Binding TappedItem, Mode=TwoWay}">
 
                 <CollectionView.EmptyView>
                     <Grid VerticalOptions="Center" Padding="20">

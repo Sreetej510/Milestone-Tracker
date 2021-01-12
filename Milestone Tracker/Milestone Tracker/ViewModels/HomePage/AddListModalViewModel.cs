@@ -56,7 +56,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
 
         public bool IsAdvanced { get; set; }
 
-        private static readonly string[] colors = new string[] { "#F72585", "#7209B7", "#3A0CA3", "#4361EE", "#4CC9F0", "#fee440", "#9b5de5", "#f15bb5", "00bbf9", "#00f5d4" };
+        private static readonly string[] colors = new string[] { "#F72585", "#7209B7", "#3A0CA3", "#4361EE", "#4CC9F0", "#fee440", "#9b5de5", "#f15bb5", "#00bbf9", "#00f5d4" };
 
         public AddListModalViewModel(Grid modalGrid)
         {

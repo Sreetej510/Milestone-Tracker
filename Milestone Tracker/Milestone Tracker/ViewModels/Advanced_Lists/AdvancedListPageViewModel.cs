@@ -10,14 +10,23 @@ using Xamarin.Forms;
 
 namespace Milestone_Tracker.ViewModels.Advanced_Lists
 {
-    internal class AdvancedListPageViewModel : INotifyPropertyChanged
+    internal class AdvancedListPageViewModel : BindableObject
     {
         //Fields
-        public string ListName { get; }
+        public string ListName { get; set; }
 
-        public PopulateList PopulateList { get; private set; }
-        public ObservableCollection<MilestoneGroup> ItemList { get; set; }
-        public ObservableCollection<MilestoneGroup> SearchItemList { get; set; }
+        private PopulateList _populateList;
+
+        public PopulateList PopulateList
+        {
+            get { return _populateList; }
+            set
+            {
+                _populateList = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Command ItemTapped { get; set; }
         public Command ItemDelete { get; set; }
         public Command ItemAdd { get; set; }
@@ -36,6 +45,7 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
 
         public bool EnableTapped { get; private set; }
         public Command ItemEdit { get; set; }
+
         private Milestone _tappedItem;
 
         public Milestone TappedItem
@@ -48,31 +58,27 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             }
         }
 
-        public string SearchBarText { get; private set; }
-
         public string WebAPIkey = "AIzaSyCzSretU-4oxkfKSCSjfSYBRC8pGWz7oOI";
-
-        // On Property Change
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         // constuctor
         public AdvancedListPageViewModel(string listName)
         {
             //GetProfileInformationAndRefreshToken();
+
+            Task.Run(() =>
+            {
+                Enable = true;
+                EnableTapped = true;
+                ItemTapped = new Command(EventItemTapped);
+                ItemDelete = new Command(EventItemDelete);
+                ItemEdit = new Command(EventItemEdit);
+                ItemAdd = new Command(EventItemAdd);
+            });
+            Task.Run(() =>
+            {
+                PopulateList = new PopulateList(listName);
+            });
             ListName = listName;
-            Enable = true;
-            EnableTapped = true;
-            PopulateList = new PopulateList(listName);
-            ItemList = PopulateList.MilestonesList;
-            ItemTapped = new Command(EventItemTapped);
-            ItemDelete = new Command(EventItemDelete);
-            ItemEdit = new Command(EventItemEdit);
-            ItemAdd = new Command(EventItemAdd);
         }
 
         // events

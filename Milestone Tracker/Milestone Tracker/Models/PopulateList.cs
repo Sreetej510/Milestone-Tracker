@@ -34,12 +34,11 @@ namespace Milestone_Tracker.Models
             ListName = listName;
             MilestonesList = new ObservableCollection<MilestoneGroup>();
             JsonFIleActivities = new ReadAndWriteJson(listName, "List_Data", "list");
-
-            var jObject = JsonFIleActivities.ReadJson();
-
-            var list = (JArray)jObject["onGoing"];
             Task.Run(() =>
             {
+                var jObject = JsonFIleActivities.ReadJson();
+
+                var list = (JArray)jObject["onGoing"];
                 foreach (var group in list)
                 {
                     string category = group["category"].ToString();
