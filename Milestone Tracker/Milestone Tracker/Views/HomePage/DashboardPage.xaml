@@ -9,14 +9,18 @@
             <RowDefinition Height="60" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
+
         <Image Scale="2.5" Grid.RowSpan="2" Source="sparkling_paris.jpg" />
 
         <Grid Grid.Row="0">
             <BoxView Opacity="0.4" Color="black" />
             <Label Text="Home" FontSize="25" HorizontalOptions="Center" TextColor="White" VerticalOptions="Center" />
+
+            <ImageButton Source="menu_white.png" HorizontalOptions="Start" BackgroundColor="Transparent" Padding="5" Command="{Binding MenuButtonTapped}" IsEnabled="{Binding Enable, Mode=TwoWay}" />
+
             <StackLayout Orientation="Horizontal"  HorizontalOptions="End" Padding="20,5">
-                <ImageButton Source="add_circle_white.png" BackgroundColor="Transparent"  Command="{Binding AddList}" IsEnabled="{Binding Enable, Mode=TwoWay}" />
-                <ImageButton Source="delete_white.png" BackgroundColor="Transparent" Command="{Binding BackupList}" IsEnabled="{Binding Enable, Mode=TwoWay}" />
+                <ImageButton Source="add_circle_white.png" BackgroundColor="Transparent" Command="{Binding AddList}" IsEnabled="{Binding Enable, Mode=TwoWay}" />
+                <ImageButton Source="delete_white.png" BackgroundColor="Transparent" Command="{Binding DeleteList}" IsEnabled="{Binding Enable, Mode=TwoWay}" />
             </StackLayout>
         </Grid>
 

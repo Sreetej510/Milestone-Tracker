@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Milestone_Tracker.Views.Advanced_Lists.EditItemModal"
+             BackgroundColor="Transparent">
+
+    <Grid x:Name="modalGrid">
+
+        <StackLayout BackgroundColor="Black" Opacity="0.5">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding CloseEditItemModal}" />
+            </StackLayout.GestureRecognizers>
+        </StackLayout>
+
+        <Grid x:Name="modalContainer"  HorizontalOptions="Fill" VerticalOptions="Center" Margin="20" Scale="0.6">
+
+            <BoxView CornerRadius="10" BackgroundColor="White" />
+
+            <StackLayout Padding="20">
+                <Label Text="{Binding EditTask, Mode=TwoWay}" TextColor="Black" FontSize="25" />
+                <Label Text="{Binding Category, Mode=TwoWay}" Margin="10,20" FontSize="20" />
+
+                <Entry Placeholder="Task Name" Text="{Binding Name, Mode=OneWayToSource}" Margin="10,20" MaxLength="50" FontSize="20" ClearButtonVisibility="WhileEditing" />
+                <Entry Keyboard="Numeric" Placeholder="Current Value" Text="{Binding CurrentValue, Mode=OneWayToSource}" Margin="10,20" MaxLength="30" FontSize="20" ClearButtonVisibility="WhileEditing" />
+                <Entry Keyboard="Telephone" Placeholder="Checkpoints sperated with a '-'" Text="{Binding CheckpointString, Mode=OneWayToSource}" Margin="10,20" FontSize="17" ClearButtonVisibility="WhileEditing" />
+
+                <Label Padding="20,0" Text="{Binding ErrorMsg, Mode=TwoWay}" TextColor="Red" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="15" />
+
+                <Grid Margin="0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.1*" />
+                        <ColumnDefinition Width="0.45*" />
+                        <ColumnDefinition Width="0.2*" />
+                        <ColumnDefinition Width="0.45*" />
+                        <ColumnDefinition Width="0.1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="1" Text="Done" CornerRadius="10" Command="{Binding EditItemOfList}" />
+                    <Button Grid.Column="3" Text="Cancel" CornerRadius="10" Command="{Binding CloseEditItemModal}" />
+                </Grid>
+            </StackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

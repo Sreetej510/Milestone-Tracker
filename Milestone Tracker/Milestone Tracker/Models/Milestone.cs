@@ -16,8 +16,6 @@ namespace Milestone_Tracker.Models
         public int D_NumOfCheckpoints { get; set; }
         public List<int> D_CheckpointValues { get; set; }
         public int D_CurrentCheckpoint { get; set; }
-        public int D_StartValue { get; set; }
-        public int D_EndValue { get; set; }
         public int D_CurrentValue { get; set; }
         public int D_CurrentStartValue { get; set; }
         public int D_CurrentEndValue { get; set; }
@@ -71,26 +69,6 @@ namespace Milestone_Tracker.Models
             set
             {
                 D_CurrentCheckpoint = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public int StartValue
-        {
-            get => D_StartValue;
-            set
-            {
-                D_StartValue = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public int EndValue
-        {
-            get => D_EndValue;
-            set
-            {
-                D_EndValue = value;
                 OnPropertyChanged();
             }
         }
@@ -158,10 +136,13 @@ namespace Milestone_Tracker.Models
             Category = category;
             Name = name;
             CurrentValue = currentValue;
+
             NumOfCheckpoints = checkpointValues.Count();
-            StartValue = 0;
-            CheckpointValues = new List<int>() { StartValue };
-            CheckpointValues.AddRange(checkpointValues);
+            var tempList = new List<int>() { 0 };
+            tempList.AddRange(checkpointValues);
+            List<int> distinct = tempList.Distinct().ToList();
+            CheckpointValues = new List<int> { };
+            CheckpointValues.AddRange(distinct);
             NeedStageChange = false;
 
             // current stage
@@ -169,21 +150,6 @@ namespace Milestone_Tracker.Models
         }
 
         // Methods
-        public void ChangeInfo(string name, byte numOfCheckpoints)
-        {
-            Name = name;
-            NumOfCheckpoints = numOfCheckpoints;
-        }
-
-        public void ChangeCheckpointInfo(int[] checkpointValues, int startValue, int endValue, int currentValue)
-        {
-            CheckpointValues.Clear();
-            CheckpointValues.AddRange(checkpointValues);
-            StartValue = startValue;
-            EndValue = endValue;
-            CurrentValue = currentValue;
-        }
-
         public void ChangeCurrentValue()
         {
             Progress = (float)CurrentValue / (float)CurrentEndValue;
@@ -214,6 +180,22 @@ namespace Milestone_Tracker.Models
             }
 
             json.WriteJson(jObject);
+        }
+
+        public void ChageInfo(string name, int[] checkpoints, int currentValue)
+        {
+            Name = name;
+
+            NumOfCheckpoints = checkpoints.Count();
+            var tempList = new List<int>() { 0 };
+            tempList.AddRange(checkpoints);
+            List<int> distinct = tempList.Distinct().ToList();
+            CheckpointValues.Clear();
+            CheckpointValues.AddRange(distinct);
+
+            CurrentValue = currentValue;
+
+            ChangeStage();
         }
 
         public void ChangeStage()

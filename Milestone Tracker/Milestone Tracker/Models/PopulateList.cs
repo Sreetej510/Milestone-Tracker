@@ -140,5 +140,46 @@ namespace Milestone_Tracker.Models
 
             JsonFIleActivities.WriteJson(jObject);
         }
+
+        public void EditItemOfPopulateList(Milestone editItem, string name, string checkpointString, int currentValue)
+        {
+            var jObject = JsonFIleActivities.ReadJson();
+
+            var list = (JArray)jObject["onGoing"];
+            var allCategories = (JArray)jObject["allCategories"];
+            List<string> strings = allCategories.ToObject<List<string>>();
+
+            var deleteItemCatCap = editItem.Category.Trim().ToUpper();
+
+            var groupIndex = strings.IndexOf(deleteItemCatCap);
+
+            var group = list[groupIndex];
+
+            var groupArray = (JArray)group["contents"];
+
+            foreach (var item in groupArray)
+            {
+                if (item["name"].ToString() == editItem.Name)
+                {
+                    item["name"] = name;
+                    item["checkpoints"] = checkpointString.Replace('-', ',');
+                    item["currentValue"] = currentValue;
+                    break;
+                }
+            }
+
+            var itemIndex = MilestonesList[groupIndex].IndexOf(editItem);
+            MilestonesList[groupIndex].Remove(editItem);
+
+            var array = checkpointString.Split('-');
+            var checkpoints = Array.ConvertAll(array, s => int.Parse(s));
+            Array.Sort(checkpoints);
+
+            editItem.ChageInfo(name, checkpoints, currentValue);
+
+            MilestonesList[groupIndex].Insert(itemIndex, editItem);
+
+            JsonFIleActivities.WriteJson(jObject);
+        }
     }
 }

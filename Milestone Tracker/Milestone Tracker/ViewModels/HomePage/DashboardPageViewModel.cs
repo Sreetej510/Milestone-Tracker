@@ -1,13 +1,9 @@
 ﻿using Milestone_Tracker.Data;
-using Milestone_Tracker.Models;
 using Milestone_Tracker.Navigation;
 using Milestone_Tracker.Views.Advanced_Lists;
 using Milestone_Tracker.Views.HomePage;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -17,6 +13,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
     {
         public ObservableCollection<PageList> DashboardCollection { get; set; }
         public Command ItemTapped { get; set; }
+        public Command MenuButtonTapped { get; private set; }
 
         private PageList _tappedItem;
 
@@ -44,24 +41,12 @@ namespace Milestone_Tracker.ViewModels.HomePage
 
         public Command AddList { get; set; }
         public Command DeleteList { get; set; }
-        public Command BackupList { get; set; }
         public ReadAndWriteJson JsonFIleActivities { get; }
         public bool EnableTapped { get; private set; }
 
         //Constructor
         public DashboardPageViewModel()
         {
-            JsonFIleActivities = new ReadAndWriteJson("DashBoardList", "AppData", "dashboard");
-            Task.Run(() =>
-            {
-                Enable = true;
-                EnableTapped = true;
-                AddList = new Command(EventAddList);
-                DeleteList = new Command(EventDeleteList);
-                BackupList = new Command(EventBackupList);
-                ItemTapped = new Command(EventOpenList);
-            });
-
             Task.Run(() =>
             {
                 DashboardCollection = new ObservableCollection<PageList>();
@@ -69,12 +54,14 @@ namespace Milestone_Tracker.ViewModels.HomePage
             });
 
             Enable = true;
-        }
+            EnableTapped = true;
 
-        private void EventBackupList(object obj)
-        {
-            var upload = new UploadAndDownload();
-            Task.Run(() => upload.UploadTOStorage());
+            AddList = new Command(EventAddList);
+            DeleteList = new Command(EventDeleteList);
+            ItemTapped = new Command(EventOpenList);
+            MenuButtonTapped = new Command(EventMenuButtonTapped);
+
+            JsonFIleActivities = new ReadAndWriteJson("DashBoardList", "AppData", "dashboard");
         }
 
         //methods
@@ -95,7 +82,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
         }
 
         // command events
-        private async void EventAddList(object obj)
+        private async void EventAddList()
         {
             Enable = false;
             await new NavigationService().PushModalPage(new AddListModal(), false);
@@ -103,7 +90,7 @@ namespace Milestone_Tracker.ViewModels.HomePage
             Enable = true;
         }
 
-        private async void EventOpenList(object obj)
+        private async void EventOpenList()
         {
             if (TappedItem != null && EnableTapped)
             {
@@ -115,10 +102,18 @@ namespace Milestone_Tracker.ViewModels.HomePage
             }
         }
 
-        private async void EventDeleteList(object obj)
+        private async void EventDeleteList()
         {
             Enable = false;
             await new NavigationService().PushModalPage(new DeleteListModal(), false);
+            await Task.Delay(100);
+            Enable = true;
+        }
+
+        private async void EventMenuButtonTapped()
+        {
+            Enable = false;
+            await new NavigationService().PushModalPage(new MenuModal(), false);
             await Task.Delay(100);
             Enable = true;
         }

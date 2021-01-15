@@ -1,12 +1,12 @@
 ﻿using Milestone_Tracker.Data;
 using Milestone_Tracker.Views.Advanced_Lists;
 using Milestone_Tracker.Views.HomePage;
-using Milestone_Tracker.Views.Login;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker
@@ -19,7 +19,7 @@ namespace Milestone_Tracker
         {
             InitializeComponent();
             Device.SetFlags(new[] { "SwipeView_Experimental" });
-            MainPage = new NavigationPage(new LoginPage());
+            MainPage = new NavigationPage(new DashboardPage());
         }
 
         protected override void OnStart()
@@ -32,6 +32,7 @@ namespace Milestone_Tracker
                 if (!File.Exists(FirstUsePath))
                 {
                     File.WriteAllText(FirstUsePath, "true");
+                    Preferences.Set("LogStatus", "loggedOut");
                     await FirstUse();
                 }
             });
@@ -68,21 +69,6 @@ namespace Milestone_Tracker
                     var text = "{\"listNames\":[], \"list\": []}";
                     JObject jsonObject = JObject.Parse(text);
                     JsonFIleActivities.WriteJson(jsonObject);
-                }
-                if (true)
-                {
-                    var assembly = IntrospectionExtensions.GetTypeInfo(typeof(AdvancedListPage)).Assembly;
-                    Stream stream = assembly.GetManifestResourceStream("Milestone_Tracker.Data.Fortnite.json");
-                    string text = "";
-                    using (var reader = new StreamReader(stream))
-                    {
-                        text = reader.ReadToEnd();
-                    }
-                    var jObject = JObject.Parse(text);
-
-                    var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "List_Data");
-                    var filePath = Path.Combine(folder, "Fortnite.json");
-                    File.WriteAllText(filePath, jObject.ToString());
                 }
             });
         }

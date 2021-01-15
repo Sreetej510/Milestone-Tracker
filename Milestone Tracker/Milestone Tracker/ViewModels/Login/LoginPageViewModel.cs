@@ -2,6 +2,7 @@
 using Milestone_Tracker.Navigation;
 using Newtonsoft.Json;
 using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Milestone_Tracker.ViewModels.Login
@@ -63,51 +64,74 @@ namespace Milestone_Tracker.ViewModels.Login
         //Login
         private async void EventLogin()
         {
-            var authProvider = new FirebaseAuthProvider(new FirebaseConfig(WebAPIkey));
-            if (LoginEmail != null && LoginPassword != null)
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet)
             {
-                try
+                var authProvider = new FirebaseAuthProvider(new FirebaseConfig(WebAPIkey));
+                if (LoginEmail != null && LoginPassword != null)
                 {
-                    var auth = await authProvider.SignInWithEmailAndPasswordAsync(LoginEmail, LoginPassword);
-                    new NavigationService().PopPage();
+                    try
+                    {
+                        var auth = await authProvider.SignInWithEmailAndPasswordAsync(LoginEmail, LoginPassword);
+                        var content = await auth.GetFreshAuthAsync();
+                        var serializedContent = JsonConvert.SerializeObject(content);
+                        Preferences.Set("FirebaseRefreshToken", serializedContent);
+                        Preferences.Set("LogStatus", "loggedIn");
+                        await Application.Current.MainPage.DisplayAlert("", "Login Sucessful", "Ok");
+                        new NavigationService().PopModalPage();
+                    }
+                    catch (Exception)
+                    {
+                        ErrorMsg = "Email or Password are not valid.";
+                        Preferences.Set("LogStatus", "loggedOut");
+                    }
                 }
-                catch (Exception)
+                else
                 {
-                    ErrorMsg = "Email or Password are not valid.";
+                    ErrorMsg = "Email and Password cannot be Empty";
                 }
             }
             else
             {
-                ErrorMsg = "Email and Password cannot be Empty";
+                ErrorMsg = "No Internet Connection available";
             }
         }
 
         //Signup
         private async void EventSignup()
         {
-            var authProvider = new FirebaseAuthProvider(new FirebaseConfig(WebAPIkey));
-            if (SignupEmail != null && SignupPassword != null && SignupPassword == SignupPasswordRetype)
+            var current = Connectivity.NetworkAccess;
+            if (current == NetworkAccess.Internet)
             {
-                try
+                var authProvider = new FirebaseAuthProvider(new FirebaseConfig(WebAPIkey));
+                if (SignupEmail != null && SignupPassword != null && SignupPassword == SignupPasswordRetype)
                 {
-                    var auth = await authProvider.CreateUserWithEmailAndPasswordAsync(SignupEmail, SignupPassword);
-                    new NavigationService().PopPage();
+                    try
+                    {
+                        var auth = await authProvider.CreateUserWithEmailAndPasswordAsync(SignupEmail, SignupPassword);
+                        await Application.Current.MainPage.DisplayAlert("", "SignUp Sucessful", "Ok");
+                        EventChangeToLogin();
+                    }
+                    catch (Exception)
+                    {
+                        ErrorMsg = "Invalid Email or Account already Exists";
+                    }
                 }
-                catch (Exception)
+                else
                 {
-                    ErrorMsg = "Invalid Email or Account already Exists";
+                    if (SignupEmail == null || SignupPassword == null || SignupPasswordRetype == null)
+                    {
+                        ErrorMsg = "Email and Password fields cannot be empty";
+                    }
+                    else
+                    {
+                        ErrorMsg = "Passwords are not matching";
+                    }
                 }
             }
             else
             {
-                if (SignupEmail == null || SignupPassword == null || SignupPasswordRetype == null)
-                {
-                    ErrorMsg = "Email and Password fields cannot be empty";
-                }
-                else
-                {
-                    ErrorMsg = "Passwords are not matching";
-                }
+                ErrorMsg = "No Internet Connection available";
             }
         }
     }

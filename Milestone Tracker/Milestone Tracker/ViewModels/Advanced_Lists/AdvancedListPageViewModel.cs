@@ -58,22 +58,16 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             }
         }
 
-        public string WebAPIkey = "AIzaSyCzSretU-4oxkfKSCSjfSYBRC8pGWz7oOI";
-
         // constuctor
         public AdvancedListPageViewModel(string listName)
         {
-            //GetProfileInformationAndRefreshToken();
+            Enable = true;
+            EnableTapped = true;
+            ItemTapped = new Command(EventItemTapped);
+            ItemDelete = new Command(EventItemDelete);
+            ItemEdit = new Command(EventItemEdit);
+            ItemAdd = new Command(EventItemAdd);
 
-            Task.Run(() =>
-            {
-                Enable = true;
-                EnableTapped = true;
-                ItemTapped = new Command(EventItemTapped);
-                ItemDelete = new Command(EventItemDelete);
-                ItemEdit = new Command(EventItemEdit);
-                ItemAdd = new Command(EventItemAdd);
-            });
             Task.Run(() =>
             {
                 PopulateList = new PopulateList(listName);
@@ -105,7 +99,7 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
         private async void EventItemEdit(object obj)
         {
             var item = (Milestone)obj;
-            await new NavigationService().PushModalPage(new CurrentValueModal(item, 1), false);
+            await new NavigationService().PushModalPage(new EditItemModal(PopulateList, item), false);
         }
 
         private async void EventItemDelete(object obj)
@@ -113,22 +107,5 @@ namespace Milestone_Tracker.ViewModels.Advanced_Lists
             var item = (Milestone)obj;
             await new NavigationService().PushModalPage(new DeleteItemModal(ListName, item, PopulateList), false);
         }
-
-        //Auto Login
-        //async private void GetProfileInformationAndRefreshToken()
-        //{
-        //    var authProvider = new FirebaseAuthProvider(new FirebaseConfig(WebAPIkey));
-        //    try
-        //    {
-        //        var savedfirebaseauth = JsonConvert.DeserializeObject<FirebaseAuth>(Preferences.Get("MyFirebaseRefreshToken", ""));
-        //        var RefreshedContent = await authProvider.RefreshAuthAsync(savedfirebaseauth);
-        //        Preferences.Set("MyFirebaseRefreshToken", JsonConvert.SerializeObject(RefreshedContent));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //         await App.Current.MainPage.DisplayAlert("Alert", "Oh no !  Token expired", "OK");
-        //    }
-
-        //}
     }
 }

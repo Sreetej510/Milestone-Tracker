@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Milestone_Tracker.Views.HomePage.MenuModal"
+             BackgroundColor="Transparent">
+
+    <Grid x:Name="modalGrid">
+
+        <StackLayout BackgroundColor="Black" Opacity="0.5">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding CloseMenuModal}" />
+            </StackLayout.GestureRecognizers>
+        </StackLayout>
+
+        <Grid x:Name="modalContainer" HorizontalOptions="Fill" VerticalOptions="Start" TranslationY="-200">
+
+            <BoxView CornerRadius="0, 0, 30, 30" BackgroundColor="White" />
+
+            <StackLayout>
+
+                <Grid Padding="40,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" HorizontalOptions="Fill" Padding="0,5">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RestoreList}" />
+                        </Grid.GestureRecognizers>
+
+                        <Image Source="cloud_download_black.png" HorizontalOptions="End" />
+                        <Label Text="Restore Tasks" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"  FontSize="25" TextColor="Black" />
+                    </Grid>
+
+                    <Grid Grid.Row="1" HorizontalOptions="Fill" Padding="0,5">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BackupList}" />
+                        </Grid.GestureRecognizers>
+
+                        <Image Source="backup_black.png" HorizontalOptions="End" />
+                        <Label Text="Backup Tasks" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="25" TextColor="Black" />
+                    </Grid>
+
+                    <Grid Grid.Row="2" HorizontalOptions="Fill" Padding="0,5">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding LoginButtonTapped}" />
+                        </Grid.GestureRecognizers>
+
+                        <Image Source="{Binding LoginStatusImage}" HorizontalOptions="End" />
+                        <Label Text="{Binding LoginText}" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="25" TextColor="Black" />
+                    </Grid>
+                </Grid>
+            </StackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>
