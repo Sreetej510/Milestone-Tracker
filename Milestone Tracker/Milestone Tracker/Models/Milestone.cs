@@ -186,7 +186,7 @@ namespace Milestone_Tracker.Models
         {
             Name = name;
 
-            NumOfCheckpoints = checkpoints.Count();
+            NumOfCheckpoints = checkpoints.Count() - 1;
             var tempList = new List<int>() { 0 };
             tempList.AddRange(checkpoints);
             List<int> distinct = tempList.Distinct().ToList();
