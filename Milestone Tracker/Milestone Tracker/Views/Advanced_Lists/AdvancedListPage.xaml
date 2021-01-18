@@ -12,7 +12,7 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <Image Scale="1.5" Grid.RowSpan="2" Source="fortnite.png" />
+        <Image Scale="1.5" Grid.RowSpan="2" Source="water.jpg" />
 
         <Grid Grid.Row="0">
             <BoxView Opacity="0.5" Color="black" />
